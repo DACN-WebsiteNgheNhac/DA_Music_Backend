@@ -12,8 +12,8 @@ using Music_Backend.Data;
 namespace Music_Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231111024146_DbInit5")]
-    partial class DbInit5
+    [Migration("20231111092235_DbInit")]
+    partial class DbInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -87,10 +87,17 @@ namespace Music_Backend.Migrations
                     b.Property<string>("Tag")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("TopicId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("TopicId");
 
                     b.ToTable("Album");
                 });
@@ -243,6 +250,25 @@ namespace Music_Backend.Migrations
                     b.ToTable("Favorite");
                 });
 
+            modelBuilder.Entity("Music_Backend.Models.Entities.HomeEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ArtistId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("TopicId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Home");
+                });
+
             modelBuilder.Entity("Music_Backend.Models.Entities.MusicVideoEntity", b =>
                 {
                     b.Property<string>("Id")
@@ -344,6 +370,9 @@ namespace Music_Backend.Migrations
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
+                    b.Property<string>("Area")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTimeOffset?>("CreatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -378,6 +407,30 @@ namespace Music_Backend.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Song");
+                });
+
+            modelBuilder.Entity("Music_Backend.Models.Entities.TopicEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Topic");
                 });
 
             modelBuilder.Entity("Music_Backend.Models.Entities.UserEntity", b =>
@@ -439,6 +492,17 @@ namespace Music_Backend.Migrations
                     b.ToTable("UserPlaylist");
                 });
 
+            modelBuilder.Entity("Music_Backend.Models.Entities.AlbumEntity", b =>
+                {
+                    b.HasOne("Music_Backend.Models.Entities.TopicEntity", "Topic")
+                        .WithMany()
+                        .HasForeignKey("TopicId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Topic");
+                });
+
             modelBuilder.Entity("Music_Backend.Models.Entities.AlbumSongEntity", b =>
                 {
                     b.HasOne("Music_Backend.Models.Entities.AlbumEntity", "Album")
@@ -486,7 +550,7 @@ namespace Music_Backend.Migrations
                         .IsRequired();
 
                     b.HasOne("Music_Backend.Models.Entities.SongEntity", "Song")
-                        .WithMany()
+                        .WithMany("ArtistSongs")
                         .HasForeignKey("SongId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -597,6 +661,8 @@ namespace Music_Backend.Migrations
             modelBuilder.Entity("Music_Backend.Models.Entities.SongEntity", b =>
                 {
                     b.Navigation("AlbumSongs");
+
+                    b.Navigation("ArtistSongs");
 
                     b.Navigation("Favorites");
 

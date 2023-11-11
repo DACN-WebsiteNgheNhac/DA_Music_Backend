@@ -29,23 +29,6 @@ namespace Music_Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Album",
-                columns: table => new
-                {
-                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Album", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Artist",
                 columns: table => new
                 {
@@ -55,8 +38,10 @@ namespace Music_Backend.Migrations
                     Gender = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     BirthDay = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     DebutDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: true),
+                    National = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
@@ -64,6 +49,20 @@ namespace Music_Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Artist", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Home",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    TopicId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ArtistId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Active = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Home", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -93,6 +92,7 @@ namespace Music_Backend.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
@@ -112,6 +112,9 @@ namespace Music_Backend.Migrations
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SongUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SongTime = table.Column<double>(type: "float", nullable: true),
+                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Area = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Listens = table.Column<double>(type: "float", nullable: false),
                     CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
                     DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
@@ -119,6 +122,21 @@ namespace Music_Backend.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Song", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Topic",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Topic", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -166,33 +184,6 @@ namespace Music_Backend.Migrations
                         name: "FK_ArtistMusicVideo_MusicVideo_MusicVideoId",
                         column: x => x.MusicVideoId,
                         principalTable: "MusicVideo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "AlbumSong",
-                columns: table => new
-                {
-                    AlbumId = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    SongId = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
-                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AlbumSong", x => new { x.AlbumId, x.SongId });
-                    table.ForeignKey(
-                        name: "FK_AlbumSong_Album_AlbumId",
-                        column: x => x.AlbumId,
-                        principalTable: "Album",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_AlbumSong_Song_SongId",
-                        column: x => x.SongId,
-                        principalTable: "Song",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -252,6 +243,31 @@ namespace Music_Backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Album",
+                columns: table => new
+                {
+                    Id = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TopicId = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Tag = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Album", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Album_Topic_TopicId",
+                        column: x => x.TopicId,
+                        principalTable: "Topic",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Favorite",
                 columns: table => new
                 {
@@ -301,6 +317,38 @@ namespace Music_Backend.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "AlbumSong",
+                columns: table => new
+                {
+                    AlbumId = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    SongId = table.Column<string>(type: "nvarchar(36)", maxLength: 36, nullable: false),
+                    CreatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    UpdatedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    DeletedAt = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AlbumSong", x => new { x.AlbumId, x.SongId });
+                    table.ForeignKey(
+                        name: "FK_AlbumSong_Album_AlbumId",
+                        column: x => x.AlbumId,
+                        principalTable: "Album",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_AlbumSong_Song_SongId",
+                        column: x => x.SongId,
+                        principalTable: "Song",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Album_TopicId",
+                table: "Album",
+                column: "TopicId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AlbumSong_SongId",
@@ -354,6 +402,9 @@ namespace Music_Backend.Migrations
                 name: "Favorite");
 
             migrationBuilder.DropTable(
+                name: "Home");
+
+            migrationBuilder.DropTable(
                 name: "PlaylistSong");
 
             migrationBuilder.DropTable(
@@ -376,6 +427,9 @@ namespace Music_Backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "User");
+
+            migrationBuilder.DropTable(
+                name: "Topic");
 
             migrationBuilder.DropTable(
                 name: "Account");

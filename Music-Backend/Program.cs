@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Music_Backend.Data;
@@ -112,15 +113,40 @@ app.Run();
 void AddDI(IServiceCollection services)
 {
     //services.Configure<CloudinarySettings>(builder.Configuration.GetSection("CloudinarySettings"));
-
-    services.AddDbContext<DataContext>();
+    //services.AddDbContext<DataContext>();
+    services.AddDbContext<DataContext>(ServiceLifetime.Transient);
     services.AddTransient<SeedData>();
     services.AddTransient<ExceptionMiddleware>();
 
 
+    #region Home
+    services.AddScoped<IHomeService, HomeService>();
+    services.AddScoped<IHomeRepository, HomeRepository>();
+    #endregion Home
+
+    #region Search
+    services.AddScoped<ISearchService, SearchService>();
+    #endregion Search
+
+    #region Song
     services.AddScoped<ISongService, SongService>();
     services.AddScoped<ISongRepository, SongRepository>();
+    #endregion Song
 
+    #region Album
+    services.AddScoped<IAlbumService, AlbumService>();
+    services.AddScoped<IAlbumRepository, AlbumRepository>();
+    #endregion Album
+
+    #region Artist
+    services.AddScoped<IArtistService, ArtistService>();
+    services.AddScoped<IArtistRepository, ArtistRepository>();
+    #endregion Artist
+
+    #region Topic
+    services.AddScoped<ITopicService, TopicService>();
+    services.AddScoped<ITopicRepository, TopicRepository>();
+    #endregion Topic
 
     services.AddAutoMapper(typeof(Program).Assembly);
 }

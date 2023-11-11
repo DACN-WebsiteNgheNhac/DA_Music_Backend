@@ -11,6 +11,9 @@ namespace Music_Backend.Models.Entities
         public double? SongTime { get; set; }
         public string? Tag { get; set; }
 
+        [DefaultValue("Vpop")]
+        public string? Area { get; set; }
+
         [DefaultValue(0)]
         public double Listens { get; set; }
         public ICollection<PlaylistSongEntity> PlaylistSongs { get; set; }

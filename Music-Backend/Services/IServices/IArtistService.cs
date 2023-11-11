@@ -4,10 +4,8 @@ using Music_Backend.Services.IService;
 
 namespace Music_Backend.Services.IServices
 {
-    public interface ISongService : IService<SongEntity>
+    public interface IArtistService : IService<ArtistEntity>
     {
         Task<Pagination?> GetPagination(string query, int pageNumber, int pageSize);
-
-        Task<List<SongEntity>> GetSongsByArea(string area, int pageNumber, int pageSize);
     }
 }

@@ -11,12 +11,10 @@ namespace Music_Backend.Models.ResponseModels
         public string? SongUrl { get; set; }
         public double? SongTime { get; set; }
 
-        public ICollection<PlaylistSongEntity> PlaylistSongs { get; set; }
-        public ICollection<FavoriteEntity> Favorites { get; set; }
-        public ICollection<AlbumSongEntity> AlbumSongs { get; set; }
+        //public ICollection<PlaylistSongEntity> PlaylistSongs { get; set; }
+        //public ICollection<FavoriteEntity> Favorites { get; set; }
+        //public ICollection<AlbumSongEntity> AlbumSongs { get; set; }
 
         public DateTimeOffset? CreatedAt { get; set; }
-        public DateTimeOffset? UpdatedAt { get; set; }
-        public DateTimeOffset? DeletedAt { get; set; }
     }
 }

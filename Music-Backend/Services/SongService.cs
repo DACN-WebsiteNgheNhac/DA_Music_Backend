@@ -42,6 +42,11 @@ namespace Music_Backend.Services
             return new Pagination(pageNumber, totalPage, pageSize);
         }
 
+        public async Task<List<SongEntity>> GetSongsByArea(string area, int pageNumber, int pageSize)
+        {
+            return await _SongRepository.GetSongsByArea(area, pageNumber, pageSize);
+        }
+
         public async Task<List<SongEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
         {
             return await _SongRepository.SearchObjectAsync(query, pageNumber, pageSize);

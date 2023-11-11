@@ -14,7 +14,32 @@
             public const string UpdateSong = BaseEndpoint + "/update/{id}";
             public const string DeleteSong = BaseEndpoint + "/delete";
         }
-        
+
+        public static class Home
+        {
+            private const string BaseEndpoint = "~/" + AreaName + "/Home";
+            public const string GetHome = BaseEndpoint + "/get-home-page";
+        }
+
+        public static class Search
+        {
+            private const string BaseEndpoint = "~/" + AreaName + "/Search";
+            public const string SearchData = BaseEndpoint + "/";
+        }
+
+
+        public static class Album
+        {
+            private const string BaseEndpoint = "~/" + AreaName + "/Album";
+            public const string GetAllAlbums = BaseEndpoint + "/get-all";
+            public const string GetAlbumById = BaseEndpoint + "/{id}";
+            public const string GetAlbumsByTopicId = BaseEndpoint + "/topic-id";
+            public const string SearchAlbums = BaseEndpoint + "/search";
+            public const string CreateAlbum = BaseEndpoint + "/create";
+            public const string UpdateAlbum = BaseEndpoint + "/update/{id}";
+            public const string DeleteAlbum = BaseEndpoint + "/delete";
+        }
+
         public static class InventoryReceiving
         {
             private const string BaseEndpoint = "~/" + AreaName + "/InventoryReceiving";
