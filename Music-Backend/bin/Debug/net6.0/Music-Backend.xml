@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Music-Backend</name>
+    </assembly>
+    <members>
+        <member name="M:Music_Backend.Controllers.SongController.GetAllSongsAsync(System.Int32,System.Int32)">
+            <summary>
+            Get All Songs
+            </summary>
+            <param name="pageNumber">Page number need go to</param>
+            <param name="pageSize">Total entry in each page</param>
+        </member>
+        <member name="M:Music_Backend.Controllers.SongController.SearchSongsAsync(System.String,System.Int32,System.Int32)">
+            <summary>
+            Search Song by title song, real name of artist, artist name
+            </summary>
+            <param name="query"> Input title song, real name of artist, artist name Song to search </param>
+            <param name="pageNumber">Page number need go to</param>
+            <param name="pageSize">Total entry in each page</param>
+        </member>
+    </members>
+</doc>
