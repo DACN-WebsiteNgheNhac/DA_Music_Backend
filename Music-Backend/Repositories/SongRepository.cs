@@ -90,7 +90,8 @@ namespace Music_Backend.Repositories
             Expression<Func<SongEntity, bool>> predicate =
               t => t.Name.Contains(query)
               || t.Description.Contains(query)
-              || t.ArtistSongs.Where(t => t.Artist.Name.Contains(query) || t.Artist.ArtistName.Contains(query)).Count() != 0
+              || t.ArtistSongs.Any(t => t.Artist.Name.Contains(query) || t.Artist.ArtistName.Contains(query))
+              || t.AlbumSongs.Any(t => t.Album.Name.Contains(query) || t.Album.Description.Contains(query))
               && t.DeletedAt == null;
 
             if (pageNumber > -1 && pageSize > -1)

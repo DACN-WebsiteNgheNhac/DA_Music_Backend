@@ -78,6 +78,8 @@ namespace Music_Backend.Repositories
               t => t.Name.Contains(query)
               || t.Description.Contains(query)
               || t.ArtistName.Contains(query)
+              || t.ArtistSongs.Any(t => t.Song.Name.Contains(query))
+              || t.ArtistSongs.Any(t => t.Song.AlbumSongs.Any(s => s.Album.Name.Contains(query) || s.Album.Description.Contains(query)))
               && t.DeletedAt == null;
 
             if (pageNumber > -1 && pageSize > -1)

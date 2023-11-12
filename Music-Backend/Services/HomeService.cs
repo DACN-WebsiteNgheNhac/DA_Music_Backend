@@ -27,10 +27,9 @@ namespace Music_Backend.Services
             _topicService = topicService;
             _mapper = mapper;
         }
-        public async Task<SectionResponse> GetHome()
+        public async Task<List<object>> GetHome()
         {
-            var homeRes = new SectionResponse();
-            homeRes.Sections = new List<object>();
+            var homeRes = new List<object>();
 
             var home = await _homeRepository.GetHome();
 
@@ -41,7 +40,7 @@ namespace Music_Backend.Services
             return homeRes;
         }
 
-        private async Task AddRecommentAlbum(SectionResponse homeRes, string topicId)
+        private async Task AddRecommentAlbum(List<object> homeRes, string topicId)
         {
             var topicIds = topicId.Split('-');
             var topics = await _topicService.GetMultiObjectById(topicIds);
@@ -51,11 +50,11 @@ namespace Music_Backend.Services
                 var sectionRecommentAlbum = new Item<AlbumResponse>("album", "recomment-album", topic.Name);
                 sectionRecommentAlbum.Items.AddRange(
                     _mapper.Map<List<AlbumResponse>>(await _albumService.SearchObjectByTopicIdAsync(topic.Id)));
-                homeRes.Sections.Add(sectionRecommentAlbum);
+                homeRes.Add(sectionRecommentAlbum);
             }
         }
 
-        private async Task AddNewRealseSongs(SectionResponse homeRes)
+        private async Task AddNewRealseSongs(List<object> homeRes)
         {
             var sectionNewRealseVpopSong = new Item<SongResponse>("song", "new-realse", "Vpop");
             var vPop = await _songService.GetSongsByArea("Vpop", 1, 20);
@@ -68,8 +67,8 @@ namespace Music_Backend.Services
                 _mapper.Map<List<SongResponse>>(anotherPop));
 
            
-            homeRes.Sections.Add(sectionNewRealseVpopSong);
-            homeRes.Sections.Add(sectionNewRealseAnotherPopSong);
+            homeRes.Add(sectionNewRealseVpopSong);
+            homeRes.Add(sectionNewRealseAnotherPopSong);
         }
 
     }

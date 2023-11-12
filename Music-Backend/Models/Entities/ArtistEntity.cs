@@ -21,6 +21,5 @@ namespace Music_Backend.Models.Entities
 
         public ICollection<ArtistMusicVideoEntity> ArtistMusicVideos { get; set; }
         public ICollection<ArtistSongEntity> ArtistSongs { get; set; }
-        
     }
 }

@@ -5,8 +5,8 @@ namespace Music_Backend.Models.ResponseModels
     public class OkResult<T>
     {
         public int StatusCode { get; set; }
-        public T Metadata { get; set; }
         public string Message { get; set; }
+        public T Metadata { get; set; }
 
         public Pagination? Pagination { get; set; }
 

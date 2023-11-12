@@ -4,6 +4,6 @@ namespace Music_Backend.Services.IServices
 {
     public interface IHomeService
     {
-        Task<SectionResponse> GetHome();
+        Task<List<object>> GetHome();
     }
 }

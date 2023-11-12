@@ -5,6 +5,6 @@ namespace Music_Backend.Services.IServices
 {
     public interface ISearchService
     {
-        public Task<SectionResponse> SearchObjectsAsync(TypeSearch type, string query, int pageNumber = -1, int pageSize = -1);
+        public Task<List<object>> SearchObjectsAsync(TypeSearch type, string query, int pageNumber = -1, int pageSize = -1);
     }
 }

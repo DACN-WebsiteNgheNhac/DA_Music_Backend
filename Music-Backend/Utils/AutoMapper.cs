@@ -13,6 +13,8 @@ namespace Music_Backend.Utils
             MapSong();
             MapAlbum();
             MapArtist();
+            MapPlaylist();
+            MapPlaylistSong();
             MapTopic();
 
         }
@@ -39,6 +41,18 @@ namespace Music_Backend.Utils
         {
             CreateMap<ArtistEntity, ArtistResponse>().ReverseMap();
             CreateMap<ArtistEntity, ArtistRequest>().ReverseMap();
+        }
+
+        private void MapPlaylistSong()
+        {
+            CreateMap<PlaylistSongEntity, PlaylistSongResponse>().ReverseMap();
+            CreateMap<PlaylistSongEntity, PlaylistSongRequest>().ReverseMap();
+        }
+
+        private void MapPlaylist()
+        {
+            CreateMap<PlaylistEntity, PlaylistResponse>().ReverseMap();
+            CreateMap<PlaylistEntity, PlaylistRequest>().ReverseMap();
         }
 
         private void MapTopic()

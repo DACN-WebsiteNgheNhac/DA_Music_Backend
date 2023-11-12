@@ -128,6 +128,10 @@ void AddDI(IServiceCollection services)
     services.AddScoped<ISearchService, SearchService>();
     #endregion Search
 
+    #region User
+    services.AddScoped<IUserService, UserService>();
+    #endregion User
+
     #region Song
     services.AddScoped<ISongService, SongService>();
     services.AddScoped<ISongRepository, SongRepository>();
@@ -142,6 +146,16 @@ void AddDI(IServiceCollection services)
     services.AddScoped<IArtistService, ArtistService>();
     services.AddScoped<IArtistRepository, ArtistRepository>();
     #endregion Artist
+
+    #region Playlist
+    services.AddScoped<IPlaylistService, PlaylistService>();
+    services.AddScoped<IPlaylistRepository, PlaylistRepository>();
+    #endregion Playlist
+
+    #region PlaylistSong
+    services.AddScoped<IPlaylistSongService, PlaylistSongService>();
+    services.AddScoped<IPlaylistSongRepository, PlaylistSongRepository>();
+    #endregion PlaylistSong
 
     #region Topic
     services.AddScoped<ITopicService, TopicService>();
