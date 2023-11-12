@@ -10,7 +10,7 @@
         public string? SectionType { get; set; }
         public string? ViewType { get; set; }
         public string? Search { get; set; }
-        public List<T> Items { get; set; } = new List<T>();
+        public T Items { get; set; } = default(T);
 
         public Item()
         {

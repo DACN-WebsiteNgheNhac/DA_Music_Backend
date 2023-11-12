@@ -34,13 +34,17 @@ namespace Music_Backend.Repositories
             if (pageNumber > -1 && pageSize > -1)
                 return await GetAllAsync().Result
                     .Where(t => t.DeletedAt == null)
+                    .Include(t => t.ArtistSongs)
+                    .ThenInclude(t => t.Artist)
+                    .OrderByDescending(t => t.CreatedAt)
                     .Skip((pageNumber - 1) * pageSize)
                     .Take(pageSize)
-                    .OrderByDescending(t => t.CreatedAt)
                     .ToListAsync();
             else
                 return await GetAllAsync().Result
                     .Where(t => t.DeletedAt == null)
+                    .Include(t => t.ArtistSongs)
+                    .ThenInclude(t => t.Artist)
                     .OrderByDescending(t => t.CreatedAt)
                     .ToListAsync();
         }
@@ -57,10 +61,10 @@ namespace Music_Backend.Repositories
 
         public async Task<List<SongEntity>> GetSongsByArea(string area, int pageNumber, int pageSize)
         {
-            area = string.IsNullOrEmpty(area) ? "Vpop" : area;
+            area = string.IsNullOrEmpty(area) ? "" : area;
 
             Expression<Func<SongEntity, bool>> predicate =
-              t =>  t.Area.Trim().ToLower() == area.Trim().ToLower()
+              t =>  t.Area.Contains(area.Trim())
               && t.DeletedAt == null;
 
 
@@ -82,6 +86,7 @@ namespace Music_Backend.Repositories
                     .ToListAsync();
             }
         }
+    
 
         public async Task<List<SongEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
         {

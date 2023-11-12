@@ -51,24 +51,24 @@ namespace Music_Backend.Services
         public async Task AddSearchSongsAsync(List<object> res, string query, int pageNumber = -1, int pageSize = -1)
         {
             var data = await _songService.SearchObjectAsync(query, pageNumber, pageSize);
-            var sectionSearch = new Item<SongResponse>("song", "search-song", "");
-            sectionSearch.Items.AddRange(_mapper.Map<List<SongResponse>>(data));
+            var sectionSearch = new Item<List<SongResponse>>("song", "search-song", "");
+            sectionSearch.Items = _mapper.Map<List<SongResponse>>(data);
             res.Add(sectionSearch);
         }
 
         public async Task AddSearchAlbumsAsync(List<object> res, string query, int pageNumber = -1, int pageSize = -1)
         {
             var data = await _albumService.SearchObjectAsync(query, pageNumber, pageSize);
-            var sectionSearch = new Item<AlbumResponse>("album", "search-album", "");
-            sectionSearch.Items.AddRange(_mapper.Map<List<AlbumResponse>>(data));
+            var sectionSearch = new Item<List<AlbumResponse>>("album", "search-album", "");
+            sectionSearch.Items = _mapper.Map<List<AlbumResponse>>(data);
             res.Add(sectionSearch);
         }
 
         public async Task AddSearchArtistsAsync(List<object> res, string query, int pageNumber = -1, int pageSize = -1)
         {
             var data = await _artistService.SearchObjectAsync(query, pageNumber, pageSize);
-            var sectionSearch = new Item<ArtistResponse>("artist", "search-artist", "");
-            sectionSearch.Items.AddRange(_mapper.Map<List<ArtistResponse>>(data));
+            var sectionSearch = new Item<List<ArtistResponse>>("artist", "search-artist", "");
+            sectionSearch.Items = _mapper.Map<List<ArtistResponse>>(data);
             res.Add(sectionSearch);
         }
 

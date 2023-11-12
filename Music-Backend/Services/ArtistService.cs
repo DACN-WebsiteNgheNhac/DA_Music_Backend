@@ -42,6 +42,11 @@ namespace Music_Backend.Services
             return new Pagination(pageNumber, totalPage, pageSize);
         }
 
+        public async Task<List<ArtistEntity>> GetTopArtistsAsync(int top = 5)
+        {
+            return await _artistRepository.GetTopArtistsAsync(top);
+        }
+
         public async Task<List<ArtistEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
         {
             return await _artistRepository.SearchObjectAsync(query, pageNumber, pageSize);

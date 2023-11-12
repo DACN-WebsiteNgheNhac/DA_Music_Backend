@@ -68,8 +68,15 @@ namespace Music_Backend.Repositories
             return await GetByIdAsync(id);
         }
 
-        
-        
+        public async Task<List<ArtistEntity>> GetTopArtistsAsync(int top)
+        {
+            return await GetAllAsync().Result
+                .Distinct()
+                .OrderByDescending(t => t.ArtistSongs.Select(asg => asg.Song.CreatedAt))
+                .Take(top)
+                .ToListAsync();
+        }
+
         public async Task<List<ArtistEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
         {
             query = string.IsNullOrEmpty(query) ? "" : query;
