@@ -5,5 +5,6 @@ namespace Music_Backend.Services.IServices
 {
     public interface IUserPlaylistService : IService<UserPlaylistEntity>
     {
+       
     }
 }

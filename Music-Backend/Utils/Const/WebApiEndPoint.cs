@@ -38,11 +38,13 @@
             public const string AddSongsToPlaylist = BaseEndpoint + "/playlist/{playlistId}";
             public const string RemoveSongsFromPlaylist = BaseEndpoint + "/playlist/{playlistId}";
             
-            
             public const string CreateCommentSong = BaseEndpoint + "/comment-song";
             public const string UpdateCommentSong = BaseEndpoint + "/comment-song";
             public const string DeleteCommentSong = BaseEndpoint + "/comment-song";
 
+            public const string GetFavoriteSongsByUserId = BaseEndpoint + "/fav-song";
+            public const string AddSongToFavoriteSongs = BaseEndpoint + "/fav-song";
+            public const string DeleteSongFromFavoriteSongs = BaseEndpoint + "/fav-song";
 
         }
 

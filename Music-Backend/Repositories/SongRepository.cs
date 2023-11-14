@@ -56,7 +56,10 @@ namespace Music_Backend.Repositories
 
         public async Task<SongEntity?> GetObjectAsync(params object[] id)
         {
-            return await GetByIdAsync(id);
+            return await GetAllAsync().Result
+                .Where(t => t.Id == id[0])
+                .Include(t => t.Comments)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<SongEntity>> GetSongsByArea(string area, int pageNumber, int pageSize)

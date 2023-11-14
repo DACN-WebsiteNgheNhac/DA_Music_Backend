@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using Music_Backend.Data;
 using Music_Backend.Exceptions;
 using Music_Backend.Models.Entities;
+using Music_Backend.Models.ResponseModels;
 
 namespace Music_Backend.Repositories
 {
@@ -139,6 +140,23 @@ namespace Music_Backend.Repositories
             {
                 throw new ActionDatabaseException($"Error updating entity: {ex.Message}");
             }
+        }
+
+        public async Task<T?> DeleteAsync(params object[] id)
+        {
+            var item = default(T);
+            try
+            {
+                item = await _context.Set<T>().FindAsync(id);
+                _context.Set<T>().RemoveRange(item);
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                return default(T);
+                throw new ActionDatabaseException($"Error updating entity: {ex.Message}");
+            }
+            return item;
         }
     }
 }

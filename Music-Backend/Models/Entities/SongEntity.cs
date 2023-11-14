@@ -20,6 +20,25 @@ namespace Music_Backend.Models.Entities
         public ICollection<FavoriteEntity> Favorites { get; set; }
         public ICollection<AlbumSongEntity> AlbumSongs { get; set; }
         public ICollection<ArtistSongEntity> ArtistSongs { get; set; }
+        public ICollection<CommentEntity> Comments { get; set; }
+
+        public SongEntity()
+        {
+            
+        }
+        public SongEntity(SongEntity t)
+        {
+            Id = t.Id;
+            Name = t.Name;
+            Description = t.Description;
+            Image = t.Image;
+            SongUrl = t.SongUrl;
+            SongTime = t.SongTime;
+            Tag = t.Tag;
+            Area = t.Area;
+            Listens = t.Listens;
+            CreatedAt = t.CreatedAt;
+        }
 
     }
 }

@@ -5,43 +5,38 @@ using System.Linq.Expressions;
 
 namespace Music_Backend.Repositories
 {
-    public class CommentRepository : BaseRepository<CommentEntity>, ICommentRepository
+    public class FavoriteRepository : BaseRepository<FavoriteEntity>, IFavoriteRepository
     {
-        public async Task<CommentEntity?> AddObjectAsync(CommentEntity obj)
+        public async Task<FavoriteEntity?> AddObjectAsync(FavoriteEntity obj)
         {
             return await AddAsync(obj);
         }
 
-        public Task<CommentEntity?> DeleteObjectSync(params object[] id)
+        public async Task<FavoriteEntity?> DeleteObjectSync(params object[] id)
         {
             throw new NotImplementedException();
         }
 
-        public Task<List<CommentEntity>> GetAllObjectAsync(int pageNumber = -1, int pageSize = -1)
+        public Task<List<FavoriteEntity>> GetAllObjectAsync(int pageNumber = -1, int pageSize = -1)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<int> GetCountAsync()
+        public Task<FavoriteEntity?> GetObjectAsync(params object[] id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<int> GetCountAsync(string query)
+        public async Task<FavoriteEntity> RemoveSongFromFavoriteSongs(FavoriteEntity favorite)
         {
-            return await GetAllAsync().Result.Where(t => t.UserId == query).CountAsync();
+            return await DeleteAsync(favorite.SongId, favorite.UserId);
         }
 
-        public Task<CommentEntity?> GetObjectAsync(params object[] id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<List<CommentEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
+        public async Task<List<FavoriteEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
         {
             query = string.IsNullOrEmpty(query) ? "" : query;
 
-            Expression<Func<CommentEntity, bool>> predicate =
+            Expression<Func<FavoriteEntity, bool>> predicate =
               t => t.UserId.Contains(query)
               && t.DeletedAt == null;
 
@@ -49,18 +44,20 @@ namespace Music_Backend.Repositories
                 return await GetAllAsync().Result
                     .Where(predicate)
                     .Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                    .Include(t => t.Song)
                     .OrderByDescending(t => t.CreatedAt)
                     .ToListAsync();
             else
                 return await GetAllAsync().Result
                     .Where(predicate)
+                    .Include(t => t.Song)
                     .OrderByDescending(t => t.CreatedAt)
                     .ToListAsync();
         }
 
-        public async Task<CommentEntity?> UpdateObjectAsync(CommentEntity obj)
+        public Task<FavoriteEntity?> UpdateObjectAsync(FavoriteEntity obj)
         {
-            return await UpdateAsync(obj);
+            throw new NotImplementedException();
         }
     }
 }

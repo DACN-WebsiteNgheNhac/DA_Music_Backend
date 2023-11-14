@@ -132,10 +132,20 @@ void AddDI(IServiceCollection services)
     services.AddScoped<IUserService, UserService>();
     #endregion User
 
-    #region User
+    #region UserPlaylist
     services.AddScoped<IUserPlaylistService, UserPlaylistService>();
     services.AddScoped<IUserPlaylistRepository, UserPlaylistRepository>();
-    #endregion User
+    #endregion UserPlaylist
+
+    #region Favorite
+    services.AddScoped<IFavoriteService, FavoriteService>();
+    services.AddScoped<IFavoriteRepository, FavoriteRepository>();
+    #endregion Favorite
+
+    #region Comment
+    services.AddScoped<ICommentService, CommentService>();
+    services.AddScoped<ICommentRepository, CommentRepository>();
+    #endregion Comment
 
     #region Song
     services.AddScoped<ISongService, SongService>();

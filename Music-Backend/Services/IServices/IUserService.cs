@@ -13,6 +13,11 @@ namespace Music_Backend.Services.IServices
         Task<List<PlaylistSongEntity>> AddSongsToPlaylist(List<PlaylistSongEntity> listItemsRequest);
         Task<PlaylistSongEntity> RemoveSongsToPlaylist(List<PlaylistSongEntity> listItemsRequest);
 
-        
+        Task<CommentEntity> AddCommentAsync(CommentEntity comment);
+        Task<CommentEntity> UpdateCommentAsync(CommentEntity comment);
+
+        Task<List<FavoriteEntity>> GetFavoriteSongsByUserId(string userId);
+        Task<FavoriteEntity> AddSongToFavoriteSongs(FavoriteEntity favorite);
+        Task<FavoriteEntity> RemoveSongFromFavoriteSongs(FavoriteEntity favorite);
     }
 }
