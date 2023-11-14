@@ -42,6 +42,16 @@ namespace Music_Backend.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<List<PlaylistEntity>> GetPlaylistsByUserId(string userId)
+        {
+            return _context.Playlist
+                .Include(t => t.UserPlaylists)
+                .Include(t => t.PlaylistSongs)
+                .ThenInclude(t => t.Song)
+                .Where(t => t.UserPlaylists.Any(t => t.UserId == userId))
+                .ToListAsync();
+        }
+
         public Task<List<PlaylistEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
         {
             throw new NotImplementedException();

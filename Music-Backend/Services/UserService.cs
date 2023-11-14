@@ -1,5 +1,4 @@
 ﻿using Music_Backend.Models.Entities;
-using Music_Backend.Models.RequestModels;
 using Music_Backend.Services.IServices;
 
 namespace Music_Backend.Services
@@ -8,22 +7,35 @@ namespace Music_Backend.Services
     {
         private readonly IPlaylistService _playlistService;
         private readonly IPlaylistSongService _playlistSongService;
+        private readonly IUserPlaylistService _userPlaylistService;
 
         public UserService(IPlaylistService playlistService
-            , IPlaylistSongService playlistSongService)
+            , IPlaylistSongService playlistSongService
+            , IUserPlaylistService userPlaylistService)
         {
             _playlistService = playlistService;
             _playlistSongService = playlistSongService;
+            _userPlaylistService = userPlaylistService;
         }
 
-        public Task<PlaylistSongEntity> AddSongsToPlaylist(ListItemsRequest<PlaylistSongEntity> listItemsRequest)
+        public async Task<List<PlaylistSongEntity>> AddSongsToPlaylist(List<PlaylistSongEntity> listItemsRequest)
         {
-            throw new NotImplementedException();
+            return await _playlistSongService.AddMultiObjectsAsync(listItemsRequest);
         }
 
-        public Task<PlaylistEntity> CreatePlaylist(PlaylistEntity playlist, string userId)
+        public async Task<PlaylistEntity> CreatePlaylist(PlaylistEntity playlist, string userId)
         {
-            throw new NotImplementedException();
+            var result = await _playlistService.AddObjectAsync(playlist);
+            if(result != null)
+            {
+                await _userPlaylistService.AddObjectAsync(
+                    new UserPlaylistEntity 
+                    { 
+                        UserId = userId, 
+                        PlaylistId = result.Id
+                    });
+            }
+            return result;
         }
 
         public Task<PlaylistEntity> DeletePlaylist(string playlistId)
@@ -31,7 +43,12 @@ namespace Music_Backend.Services
             throw new NotImplementedException();
         }
 
-        public Task<PlaylistSongEntity> RemoveSongsToPlaylist(ListItemsRequest<PlaylistSongEntity> listItemsRequest)
+        public async Task<List<PlaylistEntity>> GetPlaylistsByUserId(string userId)
+        {
+            return await _playlistService.GetPlaylistsByUserId(userId);
+        }
+
+        public Task<PlaylistSongEntity> RemoveSongsToPlaylist(List<PlaylistSongEntity> listItemsRequest)
         {
             throw new NotImplementedException();
         }

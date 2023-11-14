@@ -38,9 +38,12 @@ namespace Music_Backend.Repositories
             return await _context.Album.Where(predicate).CountAsync();
         }
 
-        public Task<AlbumEntity?> GetObjectAsync(params object[] id)
+        public async Task<AlbumEntity?> GetObjectAsync(params object[] id)
         {
-            throw new NotImplementedException();
+            return await GetAllAsync().Result.Where(t => t.Id == id[0])
+                .Include(t => t.AlbumSongs)
+                .ThenInclude(t => t.Song)
+                .FirstOrDefaultAsync();
         }
 
         public async Task<List<AlbumEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)

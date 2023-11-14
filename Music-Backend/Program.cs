@@ -132,6 +132,11 @@ void AddDI(IServiceCollection services)
     services.AddScoped<IUserService, UserService>();
     #endregion User
 
+    #region User
+    services.AddScoped<IUserPlaylistService, UserPlaylistService>();
+    services.AddScoped<IUserPlaylistRepository, UserPlaylistRepository>();
+    #endregion User
+
     #region Song
     services.AddScoped<ISongService, SongService>();
     services.AddScoped<ISongRepository, SongRepository>();

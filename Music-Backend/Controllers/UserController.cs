@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Music_Backend.Models.Entities;
 using Music_Backend.Models.RequestModels;
 using Music_Backend.Models.ResponseModels;
@@ -23,16 +24,13 @@ namespace Music_Backend.Controllers
             _mapper = mapper;
         }
 
-        //[HttpGet]
-        //[Route(WebApiEndPoint.Song.SearchSongs)]
-        //public async Task<IActionResult> SearchSongsAsync(string? query, int pageNumber = -1, int pageSize = -1)
-        //{
-        //    var data = await _SongService.SearchObjectAsync(query, pageNumber, pageSize);
-        //    var pagination = await _SongService.GetPagination(query, pageNumber, pageSize);
-        //    return this.OkResponse<object>(
-        //        _mapper.Map<List<SongResponse>>(data)
-        //        , pagination: pagination);
-        //}
+        [HttpGet]
+        [Route(WebApiEndPoint.User.GetPlaylistsByUserId)]
+        public async Task<IActionResult> GetAllPlaylistsByUserId(string userId)
+        {
+            var result = await _userService.GetPlaylistsByUserId(userId);
+            return this.OkResponse<object>(_mapper.Map<List<PlaylistResponse>>(result));
+        }
 
         [HttpPost]
         [Route(WebApiEndPoint.User.CreatePlaylist)]
@@ -43,19 +41,25 @@ namespace Music_Backend.Controllers
                 return validate;
 
             var result = await _userService.CreatePlaylist(_mapper.Map<PlaylistEntity>(dataRequest), userId);
-            return this.OkResponse<object>(_mapper.Map<SongResponse>(result));
+            return this.OkResponse<object>(_mapper.Map<PlaylistResponse>(result));
         }
 
+      
         [HttpPost]
         [Route(WebApiEndPoint.User.AddSongsToPlaylist)]
-        public async Task<IActionResult> AddSongsToPlaylist(ListItemsRequest<PlaylistSongRequest> dataRequest)
+        public async Task<IActionResult> AddSongsToPlaylist(List<string> songIds, string playlistId)
         {
-            var validate = this.CheckDataRequest(dataRequest);
+            var validate = this.CheckDataRequest(songIds);
             if (validate != null)
                 return validate;
-
-            var result = await _userService.AddSongsToPlaylist(_mapper.Map<ListItemsRequest<PlaylistSongEntity>>(dataRequest));
-            return this.OkResponse<object>(_mapper.Map<SongResponse>(result));
+            var data = songIds.Select((d, i) =>
+                new PlaylistSongEntity
+                {
+                    SongId = d,
+                    PlaylistId = playlistId
+                }).ToList();
+            var result = await _userService.AddSongsToPlaylist(data);
+            return this.OkResponse<object>(_mapper.Map<List<PlaylistSongResponse>>(result));
         }
 
     }

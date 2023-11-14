@@ -31,9 +31,9 @@ namespace Music_Backend.Services
             throw new NotImplementedException();
         }
 
-        public Task<AlbumEntity?> GetObjectAsync(params object[] id)
+        public async Task<AlbumEntity?> GetObjectAsync(params object[] id)
         {
-            throw new NotImplementedException();
+            return await _albumRepository.GetObjectAsync(id);
         }
 
         public Task<Pagination?> GetPagination(string query, int pageNumber, int pageSize)

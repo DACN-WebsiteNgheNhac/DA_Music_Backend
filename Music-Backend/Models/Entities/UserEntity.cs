@@ -5,18 +5,18 @@ namespace Music_Backend.Models.Entities
 {
     public class UserEntity : Entity
     {
-        public string Name { get; set; }
+        public string? Name { get; set; }
         public DateTimeOffset? BirthDay { get; set; }
-        public string Gender { get; set; }
+        public string? Gender { get; set; }
         public string? Image { get; set; }
 
 
         [ForeignKey("AccountId")]
-        public AccountEntity Account { get; set; }
+        public AccountEntity? Account { get; set; }
 
-        [Required]
+
         [StringLength(36)]
-        public string AccountId { get; set; }
+        public string? AccountId { get; set; }
 
         public ICollection<FavoriteEntity> Favorites { get; set; }
         public ICollection<UserPlaylistEntity> UserPlaylists { get; set; }

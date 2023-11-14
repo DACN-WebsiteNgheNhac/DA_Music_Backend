@@ -2,7 +2,6 @@
 using Music_Backend.Models.Entities;
 using Music_Backend.Models.RequestModels;
 using Music_Backend.Models.ResponseModels;
-using static Music_Backend.Utils.Const.WebApiEndPoint;
 
 namespace Music_Backend.Utils
 {
@@ -15,10 +14,23 @@ namespace Music_Backend.Utils
             MapArtist();
             MapPlaylist();
             MapPlaylistSong();
+            MapUserPlaylist();
+            MapComment();
             MapTopic();
 
         }
 
+        private void MapComment()
+        {
+            CreateMap<CommentEntity, CommentResponse>().ReverseMap();
+            CreateMap<CommentEntity, CommentRequest>().ReverseMap();
+        }
+
+        private void MapUserPlaylist()
+        {
+            //CreateMap<UserPlaylistEntity, UserPlaylistResponse>().ReverseMap();
+            //CreateMap<UserPlaylistEntity, UserPlaylistRequest>().ReverseMap();
+        }
 
         private void MapSong()
         {
@@ -51,7 +63,9 @@ namespace Music_Backend.Utils
 
         private void MapPlaylist()
         {
-            CreateMap<PlaylistEntity, PlaylistResponse>().ReverseMap();
+            CreateMap<PlaylistEntity, PlaylistResponse>()
+                .ForMember(dest => dest.Songs, opt => opt.MapFrom(src => src.PlaylistSongs.Select(playlistSong => playlistSong.Song).ToList()))
+                .ReverseMap();
             CreateMap<PlaylistEntity, PlaylistRequest>().ReverseMap();
         }
 

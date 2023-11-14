@@ -29,6 +29,8 @@ namespace Music_Backend.Data
         public DbSet<AlbumSongEntity> AlbumSong { get; set; }
         public DbSet<HomeEntity> Home { get; set; }
         public DbSet<TopicEntity> Topic { get; set; }
+        public DbSet<CommentEntity> Comment { get; set; }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

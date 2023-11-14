@@ -41,8 +41,8 @@ namespace Music_Backend.Services
                 }
             }
             
-
             obj.Id = id;
+            obj.CreatedAt = DateTimeOffset.Now;
             return await _playlistRepository.AddObjectAsync(obj);
         }
 
@@ -59,6 +59,11 @@ namespace Music_Backend.Services
         public Task<PlaylistEntity?> GetObjectAsync(params object[] id)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<PlaylistEntity>> GetPlaylistsByUserId(string userId)
+        {
+            return await _playlistRepository.GetPlaylistsByUserId(userId);
         }
 
         public Task<List<PlaylistEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)

@@ -71,7 +71,7 @@ namespace Music_Backend.Services
                 curPage++;
             }
 
-            var sectionTopArtists = new Item<List<ArtistResponse>>("artist", "hot-artist", "hot-artist");
+            var sectionTopArtists = new Item<List<ArtistResponse>>("artist", "hot-artist", "Những nghệ sỹ nổi bật");
             sectionTopArtists.Items = hotArtists;
             homeRes.Add(sectionTopArtists);
         }
@@ -106,7 +106,7 @@ namespace Music_Backend.Services
             var otherPop = await _songService.GetSongsByArea("Other Pop", 1, 20);
             newRelease.Other.AddRange(_mapper.Map<List<SongResponse>>(otherPop));
 
-            var sectionNewRelease = new Item<NewReaseleItemResponse>("song", "new-release", "new-release");
+            var sectionNewRelease = new Item<NewReaseleItemResponse>("song", "new-release", "Nhạc mới phát hành");
             sectionNewRelease.Items = newRelease;
             homeRes.Add(sectionNewRelease);
         }

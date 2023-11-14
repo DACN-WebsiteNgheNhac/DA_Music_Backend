@@ -32,5 +32,15 @@ namespace Music_Backend.Controllers
                 _mapper.Map<List<AlbumResponse>>(data)
                 , pagination: pagination);
         }
+
+        [HttpGet]
+        [Route(WebApiEndPoint.Album.GetAlbumById)]
+        public async Task<IActionResult> GetAlbumsByIdAsync(string albumId)
+        {
+            var data = await _albumService.GetObjectAsync(albumId);
+            return this.OkResponse<object>(_mapper.Map<AlbumResponse>(data));
+        }
+
+
     }
 }

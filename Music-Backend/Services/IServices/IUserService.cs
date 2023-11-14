@@ -7,10 +7,11 @@ namespace Music_Backend.Services.IServices
     {
         //Task<UserEntity> LoginAsync(string username, string password);
 
+        Task<List<PlaylistEntity>> GetPlaylistsByUserId(string userId);
         Task<PlaylistEntity> CreatePlaylist(PlaylistEntity playlist, string userId);
         Task<PlaylistEntity> DeletePlaylist(string playlistId);
-        Task<PlaylistSongEntity> AddSongsToPlaylist(ListItemsRequest<PlaylistSongEntity> listItemsRequest);
-        Task<PlaylistSongEntity> RemoveSongsToPlaylist(ListItemsRequest<PlaylistSongEntity> listItemsRequest);
+        Task<List<PlaylistSongEntity>> AddSongsToPlaylist(List<PlaylistSongEntity> listItemsRequest);
+        Task<PlaylistSongEntity> RemoveSongsToPlaylist(List<PlaylistSongEntity> listItemsRequest);
 
         
     }

@@ -1,11 +1,15 @@
 ﻿using Music_Backend.Models.Entities;
 using Music_Backend.Repositories.IRepositories;
-using Music_Backend.Services.IServices;
 
 namespace Music_Backend.Repositories
 {
     public class PlaylistSongRepository : BaseRepository<PlaylistSongEntity>, IPlaylistSongRepository
     {
+        public async Task<List<PlaylistSongEntity>> AddMultiObjectsAsync(List<PlaylistSongEntity> data)
+        {
+            return await AddMultiAsync(data);
+        }
+
         public async Task<PlaylistSongEntity?> AddObjectAsync(PlaylistSongEntity obj)
         {
             return await AddAsync(obj);

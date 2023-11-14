@@ -3,8 +3,7 @@ using Music_Backend.Services.IService;
 
 namespace Music_Backend.Services.IServices
 {
-    public interface IPlaylistService : IService<PlaylistEntity>
+    public interface IUserPlaylistService : IService<UserPlaylistEntity>
     {
-        Task<List<PlaylistEntity>> GetPlaylistsByUserId(string userId);
     }
 }
