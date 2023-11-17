@@ -8,6 +8,7 @@ namespace Music_Backend.Services.IServices
     {
         Task<Pagination?> GetPagination(string query, int pageNumber, int pageSize);
         Task<List<ArtistEntity>> GetTopArtistsAsync(int top = 5);
+        public Task<List<ArtistEntity>> GetArtistsById(string[] ids);
 
     }
 }

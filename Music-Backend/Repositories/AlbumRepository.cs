@@ -41,8 +41,11 @@ namespace Music_Backend.Repositories
         public async Task<AlbumEntity?> GetObjectAsync(params object[] id)
         {
             return await GetAllAsync().Result.Where(t => t.Id == id[0])
+                .Include(t => t.Topic)
                 .Include(t => t.AlbumSongs)
                 .ThenInclude(t => t.Song)
+                .ThenInclude(t => t.ArtistSongs)
+                .ThenInclude(t => t.Artist)
                 .FirstOrDefaultAsync();
         }
 
@@ -86,6 +89,7 @@ namespace Music_Backend.Repositories
                     .Include(t => t.Topic)
                     .Include(t => t.AlbumSongs)
                     .ThenInclude(t => t.Song)
+                    .ThenInclude(t => t.ArtistSongs)
                     .Where(predicate)
                     .Skip((pageNumber - 1) * pageSize).Take(pageSize).OrderByDescending(t => t.Id)
                     .ToListAsync();
@@ -94,6 +98,7 @@ namespace Music_Backend.Repositories
                     .Include(t => t.Topic)
                     .Include(t => t.AlbumSongs)
                     .ThenInclude(t => t.Song)
+                    .ThenInclude(t => t.ArtistSongs)
                     .Where(predicate)
                     .OrderByDescending(t => t.Id)
                     .ToListAsync();

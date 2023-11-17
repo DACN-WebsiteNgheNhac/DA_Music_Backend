@@ -20,7 +20,5 @@ namespace Music_Backend.Models.ResponseModels
         public string? Tag { get; set; }
         public string? ArtistNames { get; set; }
         public ICollection<CommentResponse> Comments { get; set; }
-
-
     }
 }

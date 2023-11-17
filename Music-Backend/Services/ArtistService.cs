@@ -28,6 +28,11 @@ namespace Music_Backend.Services
             throw new NotImplementedException();
         }
 
+        public async Task<List<ArtistEntity>> GetArtistsById(string[] ids)
+        {
+            return await _artistRepository.GetArtistsById(ids);
+        }
+
         public Task<ArtistEntity?> GetObjectAsync(params object[] id)
         {
             throw new NotImplementedException();

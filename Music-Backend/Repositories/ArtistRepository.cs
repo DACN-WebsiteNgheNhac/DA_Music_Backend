@@ -45,6 +45,13 @@ namespace Music_Backend.Repositories
                     .ToListAsync();
         }
 
+        public async Task<List<ArtistEntity>> GetArtistsById(string[] ids)
+        {
+            return await GetAllAsync().Result
+                .Where(t => ids.Contains(t.Id))
+                .ToListAsync();
+        }
+
         public async Task<int> GetCountAsync()
         {
             return await _context.Artist.CountAsync();

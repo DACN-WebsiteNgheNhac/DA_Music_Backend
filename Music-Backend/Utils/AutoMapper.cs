@@ -15,11 +15,17 @@ namespace Music_Backend.Utils
             MapArtist();
             MapPlaylist();
             MapPlaylistSong();
+            MapArtistSong();
             MapUserPlaylist();
             MapFavorite();
             MapComment();
             MapTopic();
 
+        }
+
+        private void MapArtistSong()
+        {
+            CreateMap<ArtistSongEntity, ArtistResponse>().ReverseMap();
         }
 
         private void MapFavorite()
@@ -45,6 +51,7 @@ namespace Music_Backend.Utils
             CreateMap<SongEntity, SongResponse>()
                 .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments.Select(cmt => cmt).ToList()))
                 .ForMember(dest => dest.ArtistNames, opt => opt.MapFrom(src => string.Join(" - ", src.ArtistSongs.Select(cmt => cmt.Artist.ArtistName))))
+                //.ForMember(dest => dest.Artists, opt => opt.MapFrom(src => src.ArtistSongs.Select(cmt => cmt.Artist.ArtistName))))
                 .ReverseMap();
             CreateMap<SongEntity, SongRequest>().ReverseMap();
 

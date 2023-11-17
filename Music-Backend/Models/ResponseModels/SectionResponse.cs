@@ -16,7 +16,7 @@
         {
             
         }
-        public Item(string sectionType, string viewType, string search)
+        public Item(string sectionType, string viewType, string? search)
         {
             SectionType = sectionType;
             ViewType = viewType;

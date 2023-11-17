@@ -9,5 +9,7 @@ namespace Music_Backend.Services.IServices
         Task<Pagination?> GetPagination(string query, int pageNumber, int pageSize);
         Task<Pagination?> GetPaginationByTopicId(string topicId, int pageNumber, int pageSize);
         public Task<List<AlbumEntity>> SearchObjectByTopicIdAsync(string topicId, int pageNumber = -1, int pageSize = -1);
+
+        Task<List<object>> GetAlbumById(string id, int pageNumber = -1, int pageSize = -1);
     }
 }

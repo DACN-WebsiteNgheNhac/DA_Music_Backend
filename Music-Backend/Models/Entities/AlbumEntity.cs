@@ -17,6 +17,5 @@ namespace Music_Backend.Models.Entities
         [ForeignKey("TopicId")]
         public TopicEntity Topic { get; set; }
         public ICollection<AlbumSongEntity> AlbumSongs { get; set; }
-        
     }
 }

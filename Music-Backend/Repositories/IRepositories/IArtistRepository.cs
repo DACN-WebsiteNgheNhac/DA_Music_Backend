@@ -6,5 +6,7 @@ namespace Music_Backend.Repositories.IRepositories
     {
         public Task<int> GetCountAsync(string query);
         public Task<List<ArtistEntity>> GetTopArtistsAsync(int top);
+
+        public Task<List<ArtistEntity>> GetArtistsById(string[] ids);
     }
 }
