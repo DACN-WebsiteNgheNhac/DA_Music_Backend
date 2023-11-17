@@ -597,7 +597,7 @@ namespace Music_Backend.Migrations
             modelBuilder.Entity("Music_Backend.Models.Entities.CommentEntity", b =>
                 {
                     b.HasOne("Music_Backend.Models.Entities.SongEntity", "Song")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("SongId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -714,6 +714,8 @@ namespace Music_Backend.Migrations
                     b.Navigation("AlbumSongs");
 
                     b.Navigation("ArtistSongs");
+
+                    b.Navigation("Comments");
 
                     b.Navigation("Favorites");
 

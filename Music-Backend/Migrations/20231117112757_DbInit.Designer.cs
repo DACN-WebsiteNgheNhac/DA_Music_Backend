@@ -12,8 +12,8 @@ using Music_Backend.Data;
 namespace Music_Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20231114015713_DbInit2")]
-    partial class DbInit2
+    [Migration("20231117112757_DbInit")]
+    partial class DbInit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -222,6 +222,44 @@ namespace Music_Backend.Migrations
                     b.HasIndex("SongId");
 
                     b.ToTable("ArtistSong");
+                });
+
+            modelBuilder.Entity("Music_Backend.Models.Entities.CommentEntity", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTimeOffset?>("CreatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<DateTimeOffset?>("DeletedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("SongId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.Property<DateTimeOffset?>("UpdatedAt")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasMaxLength(36)
+                        .HasColumnType("nvarchar(36)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SongId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("Music_Backend.Models.Entities.FavoriteEntity", b =>
@@ -440,7 +478,6 @@ namespace Music_Backend.Migrations
                         .HasColumnType("nvarchar(36)");
 
                     b.Property<string>("AccountId")
-                        .IsRequired()
                         .HasMaxLength(36)
                         .HasColumnType("nvarchar(36)");
 
@@ -460,7 +497,6 @@ namespace Music_Backend.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTimeOffset?>("UpdatedAt")
@@ -469,7 +505,8 @@ namespace Music_Backend.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AccountId")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasFilter("[AccountId] IS NOT NULL");
 
                     b.ToTable("User");
                 });
@@ -559,6 +596,25 @@ namespace Music_Backend.Migrations
                     b.Navigation("Song");
                 });
 
+            modelBuilder.Entity("Music_Backend.Models.Entities.CommentEntity", b =>
+                {
+                    b.HasOne("Music_Backend.Models.Entities.SongEntity", "Song")
+                        .WithMany("Comments")
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Music_Backend.Models.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Song");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Music_Backend.Models.Entities.FavoriteEntity", b =>
                 {
                     b.HasOne("Music_Backend.Models.Entities.SongEntity", "Song")
@@ -601,9 +657,7 @@ namespace Music_Backend.Migrations
                 {
                     b.HasOne("Music_Backend.Models.Entities.AccountEntity", "Account")
                         .WithOne("User")
-                        .HasForeignKey("Music_Backend.Models.Entities.UserEntity", "AccountId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("Music_Backend.Models.Entities.UserEntity", "AccountId");
 
                     b.Navigation("Account");
                 });
@@ -662,6 +716,8 @@ namespace Music_Backend.Migrations
                     b.Navigation("AlbumSongs");
 
                     b.Navigation("ArtistSongs");
+
+                    b.Navigation("Comments");
 
                     b.Navigation("Favorites");
 

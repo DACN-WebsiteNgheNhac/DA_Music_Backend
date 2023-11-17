@@ -53,6 +53,7 @@
             private const string BaseEndpoint = "~/" + AreaName + "/album";
             public const string GetAllAlbums = BaseEndpoint + "/get-all";
             public const string GetAlbumById = BaseEndpoint + "/{albumId}";
+            public const string GetSuggestionAlbumById = BaseEndpoint + "/suggestion/{albumId}";
             public const string GetAlbumsByTopicId = BaseEndpoint + "/topic-id";
             public const string SearchAlbums = BaseEndpoint + "/search";
             public const string CreateAlbum = BaseEndpoint + "/create";

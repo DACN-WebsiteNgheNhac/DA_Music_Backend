@@ -32,11 +32,16 @@ namespace Music_Backend.Services
             throw new NotImplementedException();
         }
 
-        public async Task<List<object>> GetAlbumById(string id, int pageNumber = -1, int pageSize = -1)
+        public async Task<AlbumEntity> GetAlbumById(string id)
+        {
+            return await _albumRepository.GetObjectAsync(id);
+        }
+
+        public async Task<List<object>> GetSuggestionAlbumById(string id, int pageNumber = -1, int pageSize = -1)
         {
             var res = new List<object>();
 
-            var album = await AddAlbumAsync(res, id);
+            var album = await GetAlbumById(id);
 
             if (album == null)
                 return null;
@@ -163,5 +168,7 @@ namespace Music_Backend.Services
         {
             throw new NotImplementedException();
         }
+
+       
     }
 }

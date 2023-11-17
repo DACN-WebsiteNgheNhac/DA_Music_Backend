@@ -35,12 +35,20 @@ namespace Music_Backend.Controllers
 
         [HttpGet]
         [Route(WebApiEndPoint.Album.GetAlbumById)]
-        public async Task<IActionResult> GetAlbumsByIdAsync(string albumId, int pageNumber = -1, int pageSize = -1)
+        public async Task<IActionResult> GetAlbumsByIdAsync(string albumId)
         {
-            //var data = await _albumService.GetObjectAsync(albumId);
-            var data = await _albumService.GetAlbumById(albumId, pageNumber, pageSize);
+            var data = await _albumService.GetAlbumById(albumId);
+            return this.OkResponse<AlbumResponse>(_mapper.Map<AlbumResponse>(data));
+        }
+
+        [HttpGet]
+        [Route(WebApiEndPoint.Album.GetSuggestionAlbumById)]
+        public async Task<IActionResult> GetSuggestionAlbumsByIdAsync(string albumId, int pageNumber = -1, int pageSize = -1)
+        {
+            var data = await _albumService.GetSuggestionAlbumById(albumId, pageNumber, pageSize);
             return this.OkResponse<object>(data);
         }
+
 
 
     }
