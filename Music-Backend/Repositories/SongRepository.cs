@@ -70,6 +70,11 @@ namespace Music_Backend.Repositories
               t =>  t.Area.Contains(area.Trim())
               && t.DeletedAt == null;
 
+            if(area == "Other Pop")
+                predicate =
+                 t => !t.Area.Contains("Vpop")
+                 && t.DeletedAt == null;
+
 
             if (pageNumber > -1 && pageSize > -1)
                 return await GetAllAsync().Result

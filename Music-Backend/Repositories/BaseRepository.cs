@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using Music_Backend.Data;
 using Music_Backend.Exceptions;
 using Music_Backend.Models.Entities;
-using Music_Backend.Models.ResponseModels;
 
 namespace Music_Backend.Repositories
 {
@@ -19,7 +18,7 @@ namespace Music_Backend.Repositories
         {
             try
             {
-                return _context.Set<T>();
+                return _context.Set<T>().AsNoTracking();
             }
             catch (Exception ex)
             {
