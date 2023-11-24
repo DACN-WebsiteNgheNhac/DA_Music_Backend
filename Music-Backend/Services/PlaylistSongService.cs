@@ -31,6 +31,16 @@ namespace Music_Backend.Services
             return await _playlistSongRepository.AddObjectAsync(obj);
         }
 
+        public async Task<List<PlaylistSongEntity>> DeleteMultiObjectsByPlaylistIdAsync(string playlistId)
+        {
+            return await _playlistSongRepository.DeleteMultiObjectsByPlaylistIdAsync(playlistId);
+        }
+
+        public async Task<List<PlaylistSongEntity>> DeleteMultiObjectsBySongIdsAsync(List<string> songIds, string playlistId)
+        {
+            return await _playlistSongRepository.DeleteMultiObjectsBySongIdsAsync(songIds, playlistId);
+        }
+
         public Task<PlaylistSongEntity?> DeleteObjectSync(params object[] id)
         {
             throw new NotImplementedException();

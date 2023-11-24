@@ -42,19 +42,21 @@ namespace Music_Backend.Repositories
             query = string.IsNullOrEmpty(query) ? "" : query;
 
             Expression<Func<CommentEntity, bool>> predicate =
-              t => t.UserId.Contains(query)
+              t => t.SongId.Contains(query)
               && t.DeletedAt == null;
 
             if (pageNumber > -1 && pageSize > -1)
-                return await GetAllAsync().Result
+                return await GetAllAsync().Result.AsNoTracking()
                     .Where(predicate)
-                    .Skip((pageNumber - 1) * pageSize).Take(pageSize)
                     .OrderByDescending(t => t.CreatedAt)
+                    .Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                    .Include(t => t.User)
                     .ToListAsync();
             else
-                return await GetAllAsync().Result
+                return await GetAllAsync().Result.AsNoTracking()
                     .Where(predicate)
                     .OrderByDescending(t => t.CreatedAt)
+                    .Include(t => t.User)
                     .ToListAsync();
         }
 

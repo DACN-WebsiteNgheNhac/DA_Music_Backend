@@ -4,6 +4,28 @@
         <name>Music-Backend</name>
     </assembly>
     <members>
+        <member name="M:Music_Backend.Controllers.CommentController.GetCommentsBySongId(System.String,System.Int32,System.Int32)">
+            <summary>
+            Search comment by songId
+            </summary>
+            <param name="songId"> Input songId to search </param>
+            <param name="pageNumber">Page number need go to</param>
+            <param name="pageSize">Total entry in each page</param>
+        </member>
+        <member name="M:Music_Backend.Controllers.PlaylistController.GetPlaylistsByUserId(System.String,System.Int32,System.Int32)">
+            <summary>
+            Get playlists by userId
+            </summary>
+            <param name="userId"> Input userId to search </param>
+            <param name="pageNumber">Page number need go to</param>
+            <param name="pageSize">Total entry in each page</param>
+        </member>
+        <member name="M:Music_Backend.Controllers.PlaylistController.GetPlaylistByPlaylistId(System.String)">
+            <summary>
+            Get detail information of playlist by playlistId
+            </summary>
+            <param name="playlistId"> Input playlistId to get detail information of playlist </param>
+        </member>
         <member name="M:Music_Backend.Controllers.SearchController.SearchAsync(Music_Backend.Controllers.TypeSearch,System.String,System.Int32,System.Int32)">
             <summary>
             Search 

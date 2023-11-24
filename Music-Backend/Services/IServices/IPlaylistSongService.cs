@@ -7,5 +7,7 @@ namespace Music_Backend.Services.IServices
     public interface IPlaylistSongService : IService<PlaylistSongEntity>
     {
         Task<List<PlaylistSongEntity>> AddMultiObjectsAsync(List<PlaylistSongEntity> data);
+        Task<List<PlaylistSongEntity>> DeleteMultiObjectsByPlaylistIdAsync(string playlistId);
+        Task<List<PlaylistSongEntity>> DeleteMultiObjectsBySongIdsAsync(List<string> songIds, string playlistId);
     }
 }

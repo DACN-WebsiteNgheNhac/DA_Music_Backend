@@ -1,22 +1,26 @@
 ﻿using Music_Backend.Models.Entities;
+using Music_Backend.Repositories.IRepositories;
 using Music_Backend.Services.IServices;
 
 namespace Music_Backend.Services
 {
     public class UserService : IUserService
     {
+        private readonly IUserRepository _userRepository;
         private readonly IPlaylistService _playlistService;
         private readonly IPlaylistSongService _playlistSongService;
         private readonly IUserPlaylistService _userPlaylistService;
         private readonly ICommentService _commentService;
         private readonly IFavoriteService _favoriteService;
 
-        public UserService(IPlaylistService playlistService
+        public UserService(IUserRepository userRepository
+            , IPlaylistService playlistService
             , IPlaylistSongService playlistSongService
             , IUserPlaylistService userPlaylistService
             , ICommentService commentService
             , IFavoriteService favoriteService)
         {
+            _userRepository = userRepository;
             _playlistService = playlistService;
             _playlistSongService = playlistSongService;
             _userPlaylistService = userPlaylistService;
@@ -67,6 +71,11 @@ namespace Music_Backend.Services
         public async Task<List<PlaylistEntity>> GetPlaylistsByUserId(string userId)
         {
             return await _playlistService.GetPlaylistsByUserId(userId);
+        }
+
+        public Task<UserEntity> GetObjectById(params object[] id)
+        {
+            return _userRepository.GetObjectAsync(id);
         }
 
         public async Task<FavoriteEntity> RemoveSongFromFavoriteSongs(FavoriteEntity favorite)

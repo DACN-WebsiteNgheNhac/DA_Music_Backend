@@ -36,7 +36,10 @@ namespace Music_Backend.Utils
 
         private void MapComment()
         {
-            CreateMap<CommentEntity, CommentResponse>().ReverseMap();
+            CreateMap<CommentEntity, CommentResponse>()
+                .ForMember(dest => dest.Username, t=>t.MapFrom(src => src.User.Name))
+                .ForMember(dest => dest.ImageUser, t=>t.MapFrom(src => src.User.Image))
+                .ReverseMap();
             CreateMap<CommentEntity, CommentRequest>().ReverseMap();
         }
 

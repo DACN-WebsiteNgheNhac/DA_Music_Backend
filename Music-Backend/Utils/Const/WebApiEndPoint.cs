@@ -61,6 +61,26 @@
             public const string DeleteAlbum = BaseEndpoint + "/delete";
         }
 
+        public static class Comment
+        {
+            private const string BaseEndpoint = "~/" + AreaName + "/comment";
+            public const string GetCommentsBySongId = BaseEndpoint + "/song-id/{songId}";
+          
+        }
+
+        public static class Playlist
+        {
+            private const string BaseEndpoint = "~/" + AreaName + "/playlist";
+            public const string GetPlaylistsByUserId = BaseEndpoint + "/user-id/{userId}";
+            public const string GetPlaylistByPlaylistId = BaseEndpoint + "/playlist-id/{playlistId}";
+            public const string CreatePlaylist = BaseEndpoint + "/create/{userId}";
+            public const string DeletePlaylist = BaseEndpoint + "/delete/{playlistId}";
+            public const string AddSongsToPlaylist = BaseEndpoint + "/add-songs/{playlistId}";
+            public const string RemoveSongsFromPlaylist = BaseEndpoint + "/remove-songs/{playlistId}";
+
+            public const string UpdatePlaylist = BaseEndpoint + "/update/{playlistId}";
+        }
+
 
     }
 }

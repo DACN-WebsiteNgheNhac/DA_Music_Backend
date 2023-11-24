@@ -7,6 +7,8 @@ namespace Music_Backend.Services.IServices
     {
         //Task<UserEntity> LoginAsync(string username, string password);
 
+        Task<UserEntity> GetObjectById(params object[] id);
+
         Task<List<PlaylistEntity>> GetPlaylistsByUserId(string userId);
         Task<PlaylistEntity> CreatePlaylist(PlaylistEntity playlist, string userId);
         Task<PlaylistEntity> DeletePlaylist(string playlistId);
@@ -19,5 +21,7 @@ namespace Music_Backend.Services.IServices
         Task<List<FavoriteEntity>> GetFavoriteSongsByUserId(string userId);
         Task<FavoriteEntity> AddSongToFavoriteSongs(FavoriteEntity favorite);
         Task<FavoriteEntity> RemoveSongFromFavoriteSongs(FavoriteEntity favorite);
+
+
     }
 }

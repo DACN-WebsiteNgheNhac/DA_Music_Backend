@@ -11,9 +11,9 @@ namespace Music_Backend.Repositories
             return await AddAsync(obj);
         }
 
-        public Task<PlaylistEntity?> DeleteObjectSync(params object[] id)
+        public async Task<PlaylistEntity?> DeleteObjectSync(params object[] id)
         {
-            throw new NotImplementedException();
+            return await DeleteAsync(id);
         }
 
         public async Task<List<PlaylistEntity>> GetAllObjectAsync(int pageNumber = -1, int pageSize = -1)
@@ -37,19 +37,46 @@ namespace Music_Backend.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<PlaylistEntity?> GetObjectAsync(params object[] id)
+        public async Task<int> GetCountAsync(string query)
         {
-            throw new NotImplementedException();
+            return await GetAllAsync().Result.Where(t => t.UserPlaylists.Any(t => t.UserId == query)).CountAsync();
         }
 
-        public Task<List<PlaylistEntity>> GetPlaylistsByUserId(string userId)
+        public async Task<PlaylistEntity?> GetObjectAsync(params object[] id)
         {
-            return _context.Playlist
-                .Include(t => t.UserPlaylists)
+            return await _context.Playlist.AsNoTracking()
                 .Include(t => t.PlaylistSongs)
                 .ThenInclude(t => t.Song)
-                .Where(t => t.UserPlaylists.Any(t => t.UserId == userId))
-                .ToListAsync();
+                .ThenInclude(t => t.ArtistSongs)
+                .ThenInclude(t => t.Artist).AsNoTracking()
+                .Where(t => t.Id == id[0].ToString())
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<List<PlaylistEntity>> GetPlaylistsByUserId(string userId, int pageNumber = -1, int pageSize = -1)
+        {
+            if (pageNumber > -1 && pageSize > -1)
+                return await _context.Playlist.AsNoTracking()
+                    .Include(t => t.UserPlaylists)
+                    .Include(t => t.PlaylistSongs)
+                    .ThenInclude(t => t.Song)
+                    .ThenInclude(t => t.ArtistSongs)
+                    .ThenInclude(t => t.Artist).AsNoTracking()
+                    .Where(t => t.UserPlaylists.Any(t => t.UserId == userId))
+                    .OrderByDescending(t => t.CreatedAt)
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+            else
+                return await _context.Playlist.AsNoTracking()
+                    .Include(t => t.UserPlaylists)
+                    .Include(t => t.PlaylistSongs)
+                    .ThenInclude(t => t.Song)
+                    .ThenInclude(t => t.ArtistSongs)
+                    .ThenInclude(t => t.Artist).AsNoTracking()
+                    .Where(t => t.UserPlaylists.Any(t => t.UserId == userId))
+                    .OrderByDescending(t => t.CreatedAt)
+                    .ToListAsync();
         }
 
         public Task<List<PlaylistEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
@@ -57,9 +84,9 @@ namespace Music_Backend.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<PlaylistEntity?> UpdateObjectAsync(PlaylistEntity obj)
+        public async Task<PlaylistEntity?> UpdateObjectAsync(PlaylistEntity obj)
         {
-            throw new NotImplementedException();
+            return await UpdateAsync(obj);
         }
     }
 }

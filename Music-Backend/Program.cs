@@ -177,6 +177,11 @@ void AddDI(IServiceCollection services)
     services.AddScoped<ITopicRepository, TopicRepository>();
     #endregion Topic
 
+    #region User
+    services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IUserRepository, UserRepository>();
+    #endregion User
+
     services.AddAutoMapper(typeof(Program).Assembly);
 }
 
