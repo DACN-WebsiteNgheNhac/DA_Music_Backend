@@ -1,5 +1,6 @@
 ﻿using Music_Backend.Models.Entities;
 using Music_Backend.Models.ResponseModels;
+using Music_Backend.Repositories;
 using Music_Backend.Repositories.IRepositories;
 using Music_Backend.Services.IServices;
 
@@ -8,10 +9,17 @@ namespace Music_Backend.Services
     public class ArtistService : IArtistService
     {
         private readonly IArtistRepository _artistRepository;
+        private readonly IAlbumRepository _albumRepository;
+        private readonly ISongRepository _songRepository;
 
-        public ArtistService(IArtistRepository artistRepository)
+        public ArtistService(IArtistRepository artistRepository,
+            IAlbumRepository albumRepository,
+            ISongRepository songRepository
+            )
         {
             _artistRepository = artistRepository;
+            _albumRepository = albumRepository;
+            _songRepository = songRepository;
         }
         public Task<ArtistEntity?> AddObjectAsync(ArtistEntity obj)
         {
@@ -26,6 +34,36 @@ namespace Music_Backend.Services
         public Task<List<ArtistEntity>> GetAllObjectAsync(int pageNumber = -1, int pageSize = -1)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<List<object>> GetArtist(string id)
+        {
+            var res = new List<object>();
+
+            var inforArtist = (await _artistRepository.GetArtistsById(new string[] { id })).FirstOrDefault();
+
+            if (inforArtist == null)
+                return null;
+
+            var albumsByArtistId = await _albumRepository.GetAlbumsByArtistIdAsync(id);
+            albumsByArtistId.ForEach(t => t.AlbumSongs.Clear());
+
+            var songsByArtistId = await _songRepository.GetSongsByArtistId(id);
+            songsByArtistId.ForEach(t => t.ArtistSongs.Clear());
+
+            var sectionInforArtist = new Item<object>("artist", "artist", "");
+            sectionInforArtist.Items = inforArtist;
+            res.Add(sectionInforArtist);
+
+            var sectionAlbumsByArtistId = new Item<object>("album", "album", "");
+            sectionAlbumsByArtistId.Items = albumsByArtistId;
+            res.Add(sectionAlbumsByArtistId);
+
+            var sectionSongsByArtistId = new Item<object>("song", "song", "");
+            sectionSongsByArtistId.Items = songsByArtistId;
+            res.Add(sectionSongsByArtistId);
+
+            return res;
         }
 
         public async Task<List<ArtistEntity>> GetArtistsById(string[] ids)

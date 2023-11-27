@@ -9,5 +9,6 @@ namespace Music_Backend.Services.IServices
         Task<Pagination?> GetPagination(string query, int pageNumber, int pageSize);
 
         Task<List<SongEntity>> GetSongsByArea(string area, int pageNumber, int pageSize);
+        Task<List<SongEntity>> GetSongsByArtistId(string artistId);
     }
 }

@@ -94,7 +94,14 @@ namespace Music_Backend.Repositories
                     .ToListAsync();
             }
         }
-    
+
+        public async Task<List<SongEntity>> GetSongsByArtistId(string artistId)
+        {
+            return await _context.Song.AsNoTracking()
+                .Include(t => t.ArtistSongs)
+                .Where(t => t.ArtistSongs.Any(t => t.ArtistId == artistId))
+                .ToListAsync();
+        }
 
         public async Task<List<SongEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
         {

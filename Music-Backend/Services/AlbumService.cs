@@ -169,6 +169,14 @@ namespace Music_Backend.Services
             throw new NotImplementedException();
         }
 
-       
+        public async Task<List<AlbumEntity>> GetAlbumsByArtistIdAsync(string artistId)
+        {
+            var data = await _albumRepository.GetAlbumsByArtistIdAsync(artistId);
+            data.ForEach((t) =>
+            {
+                t.AlbumSongs.Clear();
+            });
+            return data;
+        }
     }
 }

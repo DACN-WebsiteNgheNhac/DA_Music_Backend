@@ -12,5 +12,8 @@ namespace Music_Backend.Services.IServices
 
         Task<List<object>> GetSuggestionAlbumById(string id, int pageNumber = -1, int pageSize = -1);
         Task<AlbumEntity> GetAlbumById(string id);
+
+        public Task<List<AlbumEntity>> GetAlbumsByArtistIdAsync(string albumId);
+
     }
 }

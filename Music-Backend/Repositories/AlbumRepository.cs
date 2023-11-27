@@ -17,6 +17,16 @@ namespace Music_Backend.Repositories
             throw new NotImplementedException();
         }
 
+        public async Task<List<AlbumEntity>> GetAlbumsByArtistIdAsync(string albumId)
+        {
+            return await _context.Album.AsNoTracking()
+                .Include(t => t.AlbumSongs)
+                .ThenInclude(t => t.Song)
+                .ThenInclude(t => t.ArtistSongs).AsNoTracking()
+                .Where(t => t.AlbumSongs.Any(t => t.Song.ArtistSongs.Any(t => t.ArtistId == albumId)))
+                .ToListAsync();
+        }
+
         public async Task<List<AlbumEntity>> GetAllObjectAsync(int pageNumber = -1, int pageSize = -1)
         {
             return await GetAllAsync().Result.ToListAsync();

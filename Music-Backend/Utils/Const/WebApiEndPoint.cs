@@ -22,6 +22,7 @@
             public const string GetAllSongs = BaseEndpoint + "/get-all";
             public const string GetSongById = BaseEndpoint + "/{id}";
             public const string SearchSongs = BaseEndpoint + "/search";
+            public const string GetSongsByArtistId = BaseEndpoint + "/search/artist-id/{artistId}";
             public const string CreateSong = BaseEndpoint + "/create";
             public const string UpdateSong = BaseEndpoint + "/update/{id}";
             public const string DeleteSong = BaseEndpoint + "/delete";
@@ -54,6 +55,7 @@
             public const string GetAllAlbums = BaseEndpoint + "/get-all";
             public const string GetAlbumById = BaseEndpoint + "/{albumId}";
             public const string GetSuggestionAlbumById = BaseEndpoint + "/suggestion/{albumId}";
+            public const string GetAlbumsByArtistId = BaseEndpoint + "/artist-id/{artistId}";
             public const string GetAlbumsByTopicId = BaseEndpoint + "/topic-id";
             public const string SearchAlbums = BaseEndpoint + "/search";
             public const string CreateAlbum = BaseEndpoint + "/create";
@@ -80,6 +82,13 @@
 
             public const string UpdatePlaylist = BaseEndpoint + "/update/{playlistId}";
         }
+
+        public static class Artist
+        {
+            private const string BaseEndpoint = "~/" + AreaName + "/artist";
+            public const string GetArtistById = BaseEndpoint + "/{id}";
+        }
+
 
 
     }

@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Music_Backend.Models.ResponseModels;
-using Music_Backend.Services;
 using Music_Backend.Services.IServices;
 using Music_Backend.Utils.Const;
 
@@ -12,12 +10,15 @@ namespace Music_Backend.Controllers
     public class AlbumController : ControllerBase
     {
         private readonly IAlbumService _albumService;
+        private readonly IArtistService _artistService;
         private readonly IMapper _mapper;
 
         public AlbumController(IAlbumService albumService
+            , IArtistService artistService
             , IMapper mapper)
         {
             _albumService = albumService;
+            _artistService = artistService;
             _mapper = mapper;
         }
 
@@ -49,7 +50,19 @@ namespace Music_Backend.Controllers
             return this.OkResponse<object>(data);
         }
 
+        [HttpGet]
+        [Route(WebApiEndPoint.Album.GetAlbumsByArtistId)]
+        public async Task<IActionResult> GetAlbumsByArtistIdAsync(string artistId)
+        {
+            var existedArtist = await _artistService.GetArtistsById(new string[] { artistId });
+            if (existedArtist == null ||existedArtist.Count == 0)
+            {
+                return NotFound(new BadResult("Not found artist"));
+            }
 
+            var data = await _albumService.GetAlbumsByArtistIdAsync(artistId);
+            return this.OkResponse<object>(_mapper.Map<List<AlbumResponse>>(data));
+        }
 
     }
 }

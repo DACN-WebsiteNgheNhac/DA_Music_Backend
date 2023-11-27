@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Music_Backend.Models.Entities;
 using Music_Backend.Models.RequestModels;
@@ -13,12 +12,16 @@ namespace Music_Backend.Controllers
     [ApiController]
     public class SongController : ControllerBase
     {
-        private readonly ISongService _SongService;
+        private readonly ISongService _songService;
+        private readonly IArtistService _artistService;
         private readonly IMapper _mapper;
 
-        public SongController(ISongService SongService, IMapper mapper)
+        public SongController(ISongService songService
+            , IArtistService artistService
+            , IMapper mapper)
         {
-            _SongService = SongService;
+            _songService = songService;
+            _artistService = artistService;
             _mapper = mapper;
         }
 
@@ -31,8 +34,8 @@ namespace Music_Backend.Controllers
         [Route(WebApiEndPoint.Song.GetAllSongs)]
         public async Task<IActionResult> GetAllSongsAsync(int pageNumber = -1, int pageSize = -1)
         {
-            var data = await _SongService.GetAllObjectAsync(pageNumber, pageSize);
-            var pagination = await _SongService.GetPagination("", pageNumber, pageSize);
+            var data = await _songService.GetAllObjectAsync(pageNumber, pageSize);
+            var pagination = await _songService.GetPagination("", pageNumber, pageSize);
             return this.OkResponse<object>(
                 _mapper.Map<List<SongResponse>>(data)
                 , pagination: pagination);
@@ -45,7 +48,7 @@ namespace Music_Backend.Controllers
             var validate = this.CheckDataRequest(id);
             if (validate != null)
                 return validate;
-            var data = await _SongService.GetObjectAsync(id);
+            var data = await _songService.GetObjectAsync(id);
             return this.OkResponse<object>(_mapper.Map<SongResponse>(data));
         }
 
@@ -59,11 +62,25 @@ namespace Music_Backend.Controllers
         [Route(WebApiEndPoint.Song.SearchSongs)]
         public async Task<IActionResult> SearchSongsAsync(string? query, int pageNumber = -1, int pageSize = -1)
         {
-            var data = await _SongService.SearchObjectAsync(query, pageNumber, pageSize);
-            var pagination = await _SongService.GetPagination(query, pageNumber, pageSize);
+            var data = await _songService.SearchObjectAsync(query, pageNumber, pageSize);
+            var pagination = await _songService.GetPagination(query, pageNumber, pageSize);
             return this.OkResponse<object>(
                 _mapper.Map<List<SongResponse>>(data)
                 , pagination: pagination);
+        }
+
+        [HttpGet]
+        [Route(WebApiEndPoint.Song.GetSongsByArtistId)]
+        public async Task<IActionResult> GetSongsByArtistIdAsync(string artistId)
+        {
+            var existedArtist = await _artistService.GetArtistsById(new string[] { artistId });
+            if (existedArtist == null || existedArtist.Count == 0)
+            {
+                return NotFound(new BadResult("Not found artist"));
+            }
+
+            var data = await _songService.GetSongsByArtistId(artistId);
+            return this.OkResponse<object>(_mapper.Map<List<SongResponse>>(data));
         }
 
         [HttpPost]
@@ -74,7 +91,7 @@ namespace Music_Backend.Controllers
             if (validate != null)
                 return validate;
 
-            var result = await _SongService.AddObjectAsync(_mapper.Map<SongEntity>(dataRequest));
+            var result = await _songService.AddObjectAsync(_mapper.Map<SongEntity>(dataRequest));
             return this.OkResponse<object>(_mapper.Map<SongResponse>(result));
         }
 
@@ -89,7 +106,7 @@ namespace Music_Backend.Controllers
 
             var rowEntity = _mapper.Map<SongEntity>(dataRequest);
             rowEntity.Id = id;
-            var result = await _SongService.UpdateObjectAsync(rowEntity);
+            var result = await _songService.UpdateObjectAsync(rowEntity);
             return this.OkResponse<object>(_mapper.Map<SongResponse>(result));
         }
 
@@ -97,7 +114,7 @@ namespace Music_Backend.Controllers
         [Route(WebApiEndPoint.Song.DeleteSong)]
         public async Task<IActionResult> DeleteSong(string id)
         {
-            var result = await _SongService.DeleteObjectSync(id);
+            var result = await _songService.DeleteObjectSync(id);
             if (result == null)
                 return this.FailedActionDelete();
             return this.OkResponse<object>(_mapper.Map<SongResponse>(result));

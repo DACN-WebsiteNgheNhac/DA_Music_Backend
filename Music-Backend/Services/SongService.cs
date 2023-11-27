@@ -47,6 +47,13 @@ namespace Music_Backend.Services
             return await _SongRepository.GetSongsByArea(area, pageNumber, pageSize);
         }
 
+        public async Task<List<SongEntity>> GetSongsByArtistId(string artistId)
+        {
+            var data = await _SongRepository.GetSongsByArtistId(artistId);
+            data.ForEach(t => t.ArtistSongs.Clear());
+            return data;
+        }
+
         public async Task<List<SongEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)
         {
             return await _SongRepository.SearchObjectAsync(query, pageNumber, pageSize);
