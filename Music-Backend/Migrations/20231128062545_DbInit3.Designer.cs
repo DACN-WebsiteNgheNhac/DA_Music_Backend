@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Music_Backend.Data;
 
@@ -11,9 +12,10 @@ using Music_Backend.Data;
 namespace Music_Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20231128062545_DbInit3")]
+    partial class DbInit3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -400,33 +402,6 @@ namespace Music_Backend.Migrations
                     b.ToTable("PlaylistSong");
                 });
 
-            modelBuilder.Entity("Music_Backend.Models.Entities.RoleEntity", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
-                    b.Property<DateTimeOffset?>("CreatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<DateTimeOffset?>("DeletedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTimeOffset?>("UpdatedAt")
-                        .HasColumnType("datetimeoffset");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Role");
-                });
-
             modelBuilder.Entity("Music_Backend.Models.Entities.SongEntity", b =>
                 {
                     b.Property<string>("Id")
@@ -444,9 +419,6 @@ namespace Music_Backend.Migrations
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Downloads")
-                        .HasColumnType("float");
 
                     b.Property<string>("Image")
                         .HasColumnType("nvarchar(max)");
@@ -531,10 +503,6 @@ namespace Music_Backend.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("RoleId")
-                        .HasMaxLength(36)
-                        .HasColumnType("nvarchar(36)");
-
                     b.Property<DateTimeOffset?>("UpdatedAt")
                         .HasColumnType("datetimeoffset");
 
@@ -547,8 +515,6 @@ namespace Music_Backend.Migrations
                     b.HasIndex("AccountId")
                         .IsUnique()
                         .HasFilter("[AccountId] IS NOT NULL");
-
-                    b.HasIndex("RoleId");
 
                     b.HasIndex("Username")
                         .IsUnique();
@@ -704,13 +670,7 @@ namespace Music_Backend.Migrations
                         .WithOne("User")
                         .HasForeignKey("Music_Backend.Models.Entities.UserEntity", "AccountId");
 
-                    b.HasOne("Music_Backend.Models.Entities.RoleEntity", "Role")
-                        .WithMany()
-                        .HasForeignKey("RoleId");
-
                     b.Navigation("Account");
-
-                    b.Navigation("Role");
                 });
 
             modelBuilder.Entity("Music_Backend.Models.Entities.UserPlaylistEntity", b =>

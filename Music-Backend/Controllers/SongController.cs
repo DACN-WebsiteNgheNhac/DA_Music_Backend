@@ -3,8 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using Music_Backend.Models.Entities;
 using Music_Backend.Models.RequestModels;
 using Music_Backend.Models.ResponseModels;
+using Music_Backend.Services;
 using Music_Backend.Services.IServices;
 using Music_Backend.Utils.Const;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using static Music_Backend.Utils.Const.WebApiEndPoint;
 
 namespace Music_Backend.Controllers
 {
@@ -118,6 +121,50 @@ namespace Music_Backend.Controllers
             if (result == null)
                 return this.FailedActionDelete();
             return this.OkResponse<object>(_mapper.Map<SongResponse>(result));
+        }
+
+        [HttpGet]
+        [Route(WebApiEndPoint.Song.GetTopSongListens)]
+        public async Task<IActionResult> GetTopSongListens(int pageNumber = -1, int pageSize = -1)
+        {
+            var data = await _songService.GetTopListensSong(pageNumber, pageSize);
+            var pagination = await _songService.GetPagination("", pageNumber, pageSize);
+            return this.OkResponse<object>(_mapper.Map<List<SongResponse>>(data), pagination: pagination);
+        }
+
+        [HttpGet]
+        [Route(WebApiEndPoint.Song.GetTopSongDownloads)]
+        public async Task<IActionResult> GetTopSongDownloads(int pageNumber = -1, int pageSize = -1)
+        {
+            var data = await _songService.GetTopDownloadsSong(pageNumber, pageSize);
+            var pagination = await _songService.GetPagination("", pageNumber, pageSize);
+            return this.OkResponse<object>(_mapper.Map<List<SongResponse>>(data), pagination: pagination);
+        }
+
+        [HttpPut]
+        [Route(WebApiEndPoint.Song.AddListensSong)]
+        public async Task<IActionResult> AddListensSong(string songId)
+        {
+            var existedData = await _songService.GetSongById(songId);
+            if (existedData == null)
+            {
+                return NotFound(new BadResult("Not found song"));
+            }
+            var data = await _songService.AddListensSong(songId);
+            return this.OkResponse<object>(_mapper.Map<SongResponse>(data));
+        }
+
+        [HttpPut]
+        [Route(WebApiEndPoint.Song.AddDownloadsSong)]
+        public async Task<IActionResult> AddDownloadsSong(string songId)
+        {
+            var existedData = await _songService.GetSongById(songId);
+            if (existedData == null)
+            {
+                return NotFound(new BadResult("Not found song"));
+            }
+            var data = await _songService.AddDownloadsSong(songId);
+            return this.OkResponse<object>(_mapper.Map<SongResponse>(data));
         }
     }
 }

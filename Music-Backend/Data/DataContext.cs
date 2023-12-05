@@ -14,6 +14,7 @@ namespace Music_Backend.Data
 
         }
 
+        public DbSet<RoleEntity> Role { get; set; }
         public DbSet<UserEntity> User { get; set; }
         public DbSet<AccountEntity> Account { get; set; }
         public DbSet<FavoriteEntity> Favorite { get; set; }
@@ -53,8 +54,15 @@ namespace Music_Backend.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
+            AddConstraintColumns(modelBuilder);
             AddPrimaryKeys(modelBuilder);
+        }
+
+        private void AddConstraintColumns(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserEntity>()
+                .HasIndex(e => e.Username)
+                .IsUnique();
         }
 
         private void AddPrimaryKeys(ModelBuilder modelBuilder)

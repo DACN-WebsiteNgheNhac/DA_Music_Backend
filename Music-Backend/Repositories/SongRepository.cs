@@ -7,6 +7,20 @@ namespace Music_Backend.Repositories
 {
     public class SongRepository : BaseRepository<SongEntity>, ISongRepository
     {
+        public async Task<SongEntity> AddDownloadsSong(string songId)
+        {
+            var data = await GetObjectAsync(false, songId);
+            data.Downloads++;
+            return await UpdateAsync(data);
+        }
+
+        public async Task<SongEntity> AddListensSong(string songId)
+        {
+            var data = await GetObjectAsync(false, songId);
+            data.Listens++;
+            return await UpdateAsync(data);
+        }
+
         public async Task<SongEntity?> AddObjectAsync(SongEntity obj)
         {
             if (string.IsNullOrEmpty(obj.Image))
@@ -54,12 +68,24 @@ namespace Music_Backend.Repositories
             return await _context.Song.CountAsync();
         }
 
+        public async Task<SongEntity?> GetObjectAsync(bool includeComment, params object[] id)
+        {
+            if(!includeComment)
+                return await GetAllAsync().Result
+                  .Where(t => t.Id == id[0])
+                  .FirstOrDefaultAsync();
+            return await GetAllAsync().Result
+                .Where(t => t.Id == id[0])
+                .Include(t => t.Comments).AsNoTracking()
+                .FirstOrDefaultAsync();
+        }
+
         public async Task<SongEntity?> GetObjectAsync(params object[] id)
         {
             return await GetAllAsync().Result
-                .Where(t => t.Id == id[0])
-                .Include(t => t.Comments)
-                .FirstOrDefaultAsync();
+               .Where(t => t.Id == id[0])
+               .Include(t => t.Comments).AsNoTracking()
+               .FirstOrDefaultAsync();
         }
 
         public async Task<List<SongEntity>> GetSongsByArea(string area, int pageNumber, int pageSize)
@@ -101,6 +127,40 @@ namespace Music_Backend.Repositories
                 .Include(t => t.ArtistSongs)
                 .Where(t => t.ArtistSongs.Any(t => t.ArtistId == artistId))
                 .ToListAsync();
+        }
+
+        public async Task<List<SongEntity>> GetTopDownloadsSong(int pageNumber = -1, int pageSize = -1)
+        {
+            if (pageNumber > -1 && pageSize > -1)
+                return await GetAllAsync().Result.Where(t => t.DeletedAt == null)
+                    .Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                    .OrderByDescending(t => t.Downloads)
+                    .Include(t => t.ArtistSongs)
+                    .ThenInclude(t => t.Artist).AsNoTracking()
+                    .ToListAsync();
+            else
+                return await GetAllAsync().Result.Where(t => t.DeletedAt == null)
+                    .OrderByDescending(t => t.Downloads)
+                    .Include(t => t.ArtistSongs)
+                    .ThenInclude(t => t.Artist).AsNoTracking()
+                    .ToListAsync();
+        }
+
+        public async Task<List<SongEntity>> GetTopListensSong(int pageNumber = -1, int pageSize = -1)
+        {
+            if (pageNumber > -1 && pageSize > -1)
+                return await GetAllAsync().Result.Where(t => t.DeletedAt == null)
+                    .Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                    .OrderByDescending(t => t.Listens)
+                    .Include(t => t.ArtistSongs)
+                    .ThenInclude(t => t.Artist).AsNoTracking()
+                    .ToListAsync();
+            else
+                return await GetAllAsync().Result.Where(t => t.DeletedAt == null)
+                    .OrderByDescending(t => t.Listens)
+                    .Include(t => t.ArtistSongs)
+                    .ThenInclude(t => t.Artist).AsNoTracking()
+                    .ToListAsync();
         }
 
         public async Task<List<SongEntity>> SearchObjectAsync(string query = "", int pageNumber = -1, int pageSize = -1)

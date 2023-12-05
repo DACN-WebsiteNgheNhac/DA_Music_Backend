@@ -24,6 +24,27 @@ namespace Music_Backend.Controllers
             _mapper = mapper;
         }
 
+        [HttpPut]
+        [Route(WebApiEndPoint.User.Register)]
+        public async Task<IActionResult> RegisterAsync(UserRequest dataRequest)
+        {
+            var result = await _userService.RegisterAsync(_mapper.Map<UserEntity>(dataRequest));
+            return this.OkResponse<object>(_mapper.Map<UserResponse>(result));
+        }
+
+        [HttpPut]
+        [Route(WebApiEndPoint.User.Login)]
+        public async Task<IActionResult> LoginAsync(UserLoginRequest dataRequest)
+        {
+            var result = await _userService.LoginAsync(dataRequest.Username, dataRequest.Password);
+            if (result == null) 
+            {
+                return Unauthorized(new BadResult("Unauthorized"));
+            }
+            return this.OkResponse<object>(_mapper.Map<UserResponse>(result));
+        }
+
+
         [HttpGet]
         [Route(WebApiEndPoint.User.GetPlaylistsByUserId)]
         public async Task<IActionResult> GetAllPlaylistsByUserId(string userId)

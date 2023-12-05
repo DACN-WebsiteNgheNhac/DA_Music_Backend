@@ -1,4 +1,5 @@
 ﻿using Music_Backend.Models.Entities;
+using Music_Backend.Models.RequestModels;
 using Music_Backend.Repositories.IRepositories;
 using Music_Backend.Services.IServices;
 
@@ -91,6 +92,35 @@ namespace Music_Backend.Services
         public async Task<CommentEntity> UpdateCommentAsync(CommentEntity comment)
         {
             return await _commentService.UpdateObjectAsync(comment);
+        }
+        public async Task<List<UserEntity>> GetAllObjectAsync()
+        {
+            return await _userRepository.GetAllObjectAsync();
+        }
+
+        public async Task<UserEntity> RegisterAsync(UserEntity obj)
+        {
+            var prefix = "U";
+            var lastesObj = (await GetAllObjectAsync()).OrderByDescending(t => t.Id).FirstOrDefault();
+            var split = lastesObj.Id.Split(prefix);
+            var id = "";
+            if (split.Count() <= 0)
+            {
+                id = Guid.NewGuid().ToString();
+            }
+            else
+            {
+                var temp = int.Parse(split[1]);
+                id = prefix + (++temp).ToString("000");
+            }
+            obj.Id = id;
+            obj.RoleId = "1";
+            return await _userRepository.AddObjectAsync(obj);
+        }
+
+        public async Task<UserEntity> LoginAsync(string username, string password)
+        {
+            return await _userRepository.LoginAsync(username, password);
         }
     }
 }

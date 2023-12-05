@@ -5,7 +5,8 @@ namespace Music_Backend.Services.IServices
 {
     public interface IUserService
     {
-        //Task<UserEntity> LoginAsync(string username, string password);
+        Task<UserEntity> RegisterAsync(UserEntity obj);
+        Task<UserEntity> LoginAsync(string username, string password);
 
         Task<UserEntity> GetObjectById(params object[] id);
 

@@ -11,6 +11,7 @@ namespace Music_Backend.Utils
         public AutoMapper()
         {
             MapSong();
+            MapUser();
             MapAlbum();
             MapArtist();
             MapPlaylist();
@@ -20,6 +21,17 @@ namespace Music_Backend.Utils
             MapFavorite();
             MapComment();
             MapTopic();
+
+        }
+
+        private void MapUser()
+        {
+            CreateMap<UserEntity, UserRequest>().ReverseMap();
+            CreateMap<UserEntity, UserLoginRequest>().ReverseMap();
+            CreateMap<UserEntity, UserResponse>()
+                .ForMember(dest => dest.RoleId, t => t.MapFrom(src => src.Role!.Id))
+                .ForMember(dest => dest.RoleName, t => t.MapFrom(src => src.Role!.Name))
+                .ReverseMap();
 
         }
 

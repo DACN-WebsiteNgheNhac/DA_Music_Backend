@@ -26,11 +26,20 @@
             public const string CreateSong = BaseEndpoint + "/create";
             public const string UpdateSong = BaseEndpoint + "/update/{id}";
             public const string DeleteSong = BaseEndpoint + "/delete";
+
+
+            public const string GetTopSongListens = BaseEndpoint + "/top-listens";
+            public const string GetTopSongDownloads = BaseEndpoint + "/top-downloads";
+            public const string AddListensSong = BaseEndpoint + "/listens/{songId}";
+            public const string AddDownloadsSong = BaseEndpoint + "/downloads/{songId}";
         }
 
         public static class User
         {
             private const string BaseEndpoint = "~/" + AreaName + "/user";
+
+            public const string Register = BaseEndpoint + "/register";
+            public const string Login = BaseEndpoint + "/login";
 
 
             public const string GetPlaylistsByUserId = BaseEndpoint + "/playlist/{userId}";
