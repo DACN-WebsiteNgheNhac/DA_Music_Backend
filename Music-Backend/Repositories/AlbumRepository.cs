@@ -20,10 +20,10 @@ namespace Music_Backend.Repositories
         public async Task<List<AlbumEntity>> GetAlbumsByArtistIdAsync(string albumId)
         {
             return await _context.Album.AsNoTracking()
+                .Where(t => t.AlbumSongs.Any(t => t.Song.ArtistSongs.Any(t => t.ArtistId == albumId)))
                 .Include(t => t.AlbumSongs)
                 .ThenInclude(t => t.Song)
                 .ThenInclude(t => t.ArtistSongs).AsNoTracking()
-                .Where(t => t.AlbumSongs.Any(t => t.Song.ArtistSongs.Any(t => t.ArtistId == albumId)))
                 .ToListAsync();
         }
 
@@ -71,17 +71,17 @@ namespace Music_Backend.Repositories
 
             if (pageNumber > -1 && pageSize > -1)
                 return await GetAllAsync().Result
-                    .Include(t => t.AlbumSongs)
-                    .ThenInclude(t => t.Song)
                     .Where(predicate)
                     .Skip((pageNumber - 1) * pageSize).Take(pageSize)
                     .OrderByDescending(t => t.CreatedAt)
+                    .Include(t => t.AlbumSongs)
+                    .ThenInclude(t => t.Song)
                     .ToListAsync();
             else
                 return await GetAllAsync().Result
+                    .Where(predicate)
                     .Include(t => t.AlbumSongs)
                     .ThenInclude(t => t.Song)
-                    .Where(predicate)
                     .OrderByDescending(t => t.CreatedAt)
                     .ToListAsync();
         }
@@ -96,20 +96,20 @@ namespace Music_Backend.Repositories
 
             if (pageNumber > -1 && pageSize > -1)
                 return await GetAllAsync().Result
+                    .Where(predicate)
+                    .Skip((pageNumber - 1) * pageSize).Take(pageSize).OrderByDescending(t => t.Id)
                     .Include(t => t.Topic)
                     .Include(t => t.AlbumSongs)
                     .ThenInclude(t => t.Song)
                     .ThenInclude(t => t.ArtistSongs)
-                    .Where(predicate)
-                    .Skip((pageNumber - 1) * pageSize).Take(pageSize).OrderByDescending(t => t.Id)
                     .ToListAsync();
             else
                 return await GetAllAsync().Result
+                    .Where(predicate)
                     .Include(t => t.Topic)
                     .Include(t => t.AlbumSongs)
                     .ThenInclude(t => t.Song)
                     .ThenInclude(t => t.ArtistSongs)
-                    .Where(predicate)
                     .OrderByDescending(t => t.Id)
                     .ToListAsync();
         }

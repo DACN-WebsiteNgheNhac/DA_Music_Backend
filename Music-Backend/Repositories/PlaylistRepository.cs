@@ -45,11 +45,11 @@ namespace Music_Backend.Repositories
         public async Task<PlaylistEntity?> GetObjectAsync(params object[] id)
         {
             return await _context.Playlist.AsNoTracking()
+                .Where(t => t.Id == id[0].ToString())
                 .Include(t => t.PlaylistSongs)
                 .ThenInclude(t => t.Song)
                 .ThenInclude(t => t.ArtistSongs)
                 .ThenInclude(t => t.Artist).AsNoTracking()
-                .Where(t => t.Id == id[0].ToString())
                 .FirstOrDefaultAsync();
         }
 

@@ -44,14 +44,14 @@ namespace Music_Backend.Repositories
                 return await GetAllAsync().Result
                     .Where(predicate)
                     .Skip((pageNumber - 1) * pageSize).Take(pageSize)
-                    .Include(t => t.Song)
                     .OrderByDescending(t => t.CreatedAt)
+                    .Include(t => t.Song)
                     .ToListAsync();
             else
                 return await GetAllAsync().Result
                     .Where(predicate)
-                    .Include(t => t.Song)
                     .OrderByDescending(t => t.CreatedAt)
+                    .Include(t => t.Song)
                     .ToListAsync();
         }
 

@@ -115,6 +115,8 @@ namespace Music_Backend.Services
             }
             obj.Id = id;
             obj.RoleId = "1";
+            if (string.IsNullOrEmpty(obj.Image))
+                obj.Image = "https://somee.com/DOKA/DOU/MSSQL/MsSqlDatabaseConsole/4311253?handler=Query&h1h2h3=015ee1eb3d7def8f230eb75f133c893c";
             return await _userRepository.AddObjectAsync(obj);
         }
 
