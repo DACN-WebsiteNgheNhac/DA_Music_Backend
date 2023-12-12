@@ -2,6 +2,7 @@
 using Music_Backend.Models.RequestModels;
 using Music_Backend.Repositories.IRepositories;
 using Music_Backend.Services.IServices;
+using Music_Backend.Utils;
 
 namespace Music_Backend.Services
 {
@@ -115,8 +116,16 @@ namespace Music_Backend.Services
             }
             obj.Id = id;
             obj.RoleId = "1";
+
+            TimeZoneInfo timeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById("SE Asia Standard Time");
+          
+            DateTime currentTime = TimeZoneInfo.ConvertTime(DateTime.UtcNow, timeZoneInfo);
+
+            obj.CreatedAt = DateTimeExtensions.ConvertToTimeZone(currentTime, 7);
+
             if (string.IsNullOrEmpty(obj.Image))
-                obj.Image = "https://somee.com/DOKA/DOU/MSSQL/MsSqlDatabaseConsole/4311253?handler=Query&h1h2h3=015ee1eb3d7def8f230eb75f133c893c";
+                obj.Image = "https://res.cloudinary.com/thanhle/image/upload/v1689390812/SeaSound/Song/Image/Image_35.jpg";
+
             return await _userRepository.AddObjectAsync(obj);
         }
 
