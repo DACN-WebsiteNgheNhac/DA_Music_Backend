@@ -45,9 +45,9 @@ namespace Music_Backend.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<UserEntity?> UpdateObjectAsync(UserEntity obj)
+        public async Task<UserEntity?> UpdateObjectAsync(UserEntity obj)
         {
-            throw new NotImplementedException();
+            return await UpdateAsync(obj);
         }
     }
 }

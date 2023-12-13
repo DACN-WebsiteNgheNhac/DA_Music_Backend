@@ -23,6 +23,6 @@ namespace Music_Backend.Services.IServices
         Task<FavoriteEntity> AddSongToFavoriteSongs(FavoriteEntity favorite);
         Task<FavoriteEntity> RemoveSongFromFavoriteSongs(FavoriteEntity favorite);
 
-
+        Task<UserEntity> UpdateUserAsync(UserEntity user);
     }
 }

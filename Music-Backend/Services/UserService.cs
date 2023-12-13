@@ -133,5 +133,15 @@ namespace Music_Backend.Services
         {
             return await _userRepository.LoginAsync(username, password);
         }
+
+        public async Task<UserEntity> UpdateUserAsync(UserEntity user)
+        {
+            UserEntity userEntity = await _userRepository.GetObjectAsync(user.Id);
+            userEntity.Name = user.Name;
+            userEntity.Image = user.Image;
+            userEntity.Gender = user.Gender;
+            userEntity.BirthDay = user.BirthDay;
+            return await _userRepository.UpdateObjectAsync(userEntity);
+        }
     }
 }

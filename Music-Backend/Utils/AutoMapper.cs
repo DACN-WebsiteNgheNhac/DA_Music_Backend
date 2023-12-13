@@ -32,6 +32,7 @@ namespace Music_Backend.Utils
                 .ForMember(dest => dest.RoleId, t => t.MapFrom(src => src.Role!.Id))
                 .ForMember(dest => dest.RoleName, t => t.MapFrom(src => src.Role!.Name))
                 .ReverseMap();
+            CreateMap<UserEntity, UserUpdateRequest>().ReverseMap();
 
         }
 

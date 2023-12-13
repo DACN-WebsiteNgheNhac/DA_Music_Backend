@@ -10,7 +10,7 @@ using Music_Backend.Utils.Const;
 
 namespace Music_Backend.Controllers
 {
-    
+
     [ApiController]
     public class UserController : ControllerBase
     {
@@ -37,7 +37,7 @@ namespace Music_Backend.Controllers
         public async Task<IActionResult> LoginAsync(UserLoginRequest dataRequest)
         {
             var result = await _userService.LoginAsync(dataRequest.Username, dataRequest.Password);
-            if (result == null) 
+            if (result == null)
             {
                 return Unauthorized(new BadResult("Unauthorized"));
             }
@@ -65,7 +65,7 @@ namespace Music_Backend.Controllers
             return this.OkResponse<object>(_mapper.Map<PlaylistResponse>(result));
         }
 
-      
+
         [HttpPost]
         [Route(WebApiEndPoint.User.AddSongsToPlaylist)]
         public async Task<IActionResult> AddSongsToPlaylist(List<string> songIds, string playlistId)
@@ -140,5 +140,14 @@ namespace Music_Backend.Controllers
             return this.OkResponse<object>(_mapper.Map<FavoriteResponse>(result));
         }
 
+        [HttpPut]
+        [Route(WebApiEndPoint.User.UpdateUser)]
+        public async Task<IActionResult> UpdateUser(string id, UserUpdateRequest user)
+        {
+            var userEntity = _mapper.Map<UserEntity>(user);
+            userEntity.Id = id;
+            var result = await _userService.UpdateUserAsync(userEntity);
+            return this.OkResponse<object>(_mapper.Map<UserResponse>(result));
+        }
     }
 }

@@ -40,6 +40,7 @@
 
             public const string Register = BaseEndpoint + "/register";
             public const string Login = BaseEndpoint + "/login";
+            public const string UpdateUser = BaseEndpoint + "/update/{id}";
 
 
             public const string GetPlaylistsByUserId = BaseEndpoint + "/playlist/{userId}";
