@@ -18,10 +18,22 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "6.0.20",
           "Microsoft.EntityFrameworkCore.Tools": "6.0.20",
           "Swashbuckle.AspNetCore": "6.5.0",
-          "Swashbuckle.AspNetCore.Filters": "7.0.12"
+          "Swashbuckle.AspNetCore.Filters": "7.0.12",
+          "YoutubeExplode": "6.3.9"
         },
         "runtime": {
           "Music-Backend.dll": {}
+        }
+      },
+      "AngleSharp/1.0.7": {
+        "dependencies": {
+          "System.Text.Encoding.CodePages": "6.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/AngleSharp.dll": {
+            "assemblyVersion": "1.0.7.0",
+            "fileVersion": "1.0.7.0"
+          }
         }
       },
       "AutoMapper/12.0.1": {
@@ -134,7 +146,7 @@
           "System.Diagnostics.DiagnosticSource": "6.0.1",
           "System.Runtime.Caching": "4.7.0",
           "System.Security.Principal.Windows": "4.7.0",
-          "System.Text.Encoding.CodePages": "4.7.0"
+          "System.Text.Encoding.CodePages": "6.0.0"
         },
         "runtime": {
           "lib/netcoreapp3.1/Microsoft.Data.SqlClient.dll": {
@@ -657,9 +669,9 @@
         }
       },
       "System.Security.Principal.Windows/4.7.0": {},
-      "System.Text.Encoding.CodePages/4.7.0": {
+      "System.Text.Encoding.CodePages/6.0.0": {
         "dependencies": {
-          "Microsoft.NETCore.Platforms": "3.1.0"
+          "System.Runtime.CompilerServices.Unsafe": "6.0.0"
         }
       },
       "System.Text.Json/4.7.2": {},
@@ -681,6 +693,17 @@
             "fileVersion": "4.700.19.56404"
           }
         }
+      },
+      "YoutubeExplode/6.3.9": {
+        "dependencies": {
+          "AngleSharp": "1.0.7"
+        },
+        "runtime": {
+          "lib/net5.0/YoutubeExplode.dll": {
+            "assemblyVersion": "6.3.9.0",
+            "fileVersion": "6.3.9.0"
+          }
+        }
       }
     }
   },
@@ -689,6 +712,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AngleSharp/1.0.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-jZg7lDcrXRiIC8VBluuGKOCMR9mc4CIRX5vpQJ8fcgafs6T6plOzKHhAn3lJEwXorrltd9p1WtRxxhFpRBACbg==",
+      "path": "anglesharp/1.0.7",
+      "hashPath": "anglesharp.1.0.7.nupkg.sha512"
     },
     "AutoMapper/12.0.1": {
       "type": "package",
@@ -1131,12 +1161,12 @@
       "path": "system.security.principal.windows/4.7.0",
       "hashPath": "system.security.principal.windows.4.7.0.nupkg.sha512"
     },
-    "System.Text.Encoding.CodePages/4.7.0": {
+    "System.Text.Encoding.CodePages/6.0.0": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-aeu4FlaUTemuT1qOd1MyU4T516QR4Fy+9yDbwWMPHOHy7U8FD6SgTzdZFO7gHcfAPHtECqInbwklVvUK4RHcNg==",
-      "path": "system.text.encoding.codepages/4.7.0",
-      "hashPath": "system.text.encoding.codepages.4.7.0.nupkg.sha512"
+      "sha512": "sha512-ZFCILZuOvtKPauZ/j/swhvw68ZRi9ATCfvGbk1QfydmcXBkIWecWKn/250UH7rahZ5OoDBaiAudJtPvLwzw85A==",
+      "path": "system.text.encoding.codepages/6.0.0",
+      "hashPath": "system.text.encoding.codepages.6.0.0.nupkg.sha512"
     },
     "System.Text.Json/4.7.2": {
       "type": "package",
@@ -1151,6 +1181,13 @@
       "sha512": "sha512-CeWTdRNfRaSh0pm2gDTJFwVaXfTq6Xwv/sA887iwPTneW7oMtMlpvDIO+U60+3GWTB7Aom6oQwv5VZVUhQRdPQ==",
       "path": "system.windows.extensions/4.7.0",
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
+    },
+    "YoutubeExplode/6.3.9": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-coN6vw39gDA3tL1KvZnOZ2fGAyHIQ69QcczrLtsVUdy7dhbp41y/y0lidhCppjyNt3EY7Ielss1fB3IzFqXSwg==",
+      "path": "youtubeexplode/6.3.9",
+      "hashPath": "youtubeexplode.6.3.9.nupkg.sha512"
     }
   }
 }

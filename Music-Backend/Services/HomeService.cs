@@ -3,6 +3,8 @@ using Music_Backend.Models.Entities;
 using Music_Backend.Models.ResponseModels;
 using Music_Backend.Repositories.IRepositories;
 using Music_Backend.Services.IServices;
+using YoutubeExplode;
+using YoutubeExplode.Common;
 using static Music_Backend.Utils.Const.WebApiEndPoint;
 
 namespace Music_Backend.Services
@@ -41,6 +43,60 @@ namespace Music_Backend.Services
             await AddNewReleaseSongs(homeRes);
 
             return homeRes;
+        }
+
+        public async Task<object> GetAudioUrlFromYoutube(string youtubeUrl)
+        {
+            var result = default(object);
+            var song = new SongResponse();
+            var youtube = new YoutubeClient();
+
+            try
+            {
+                var video = await youtube.Videos.GetAsync(youtubeUrl);
+
+                song.Name = video.Title;
+                song.ArtistNames = video.Author.ChannelTitle;
+                song.Image = GetImageYoutube(video.Thumbnails as Thumbnail[]);
+
+                List<object> audioUrls = new List<object>();
+
+                var streamManifest = await youtube.Videos.Streams.GetManifestAsync(youtubeUrl);
+
+                var streamInfo = streamManifest
+                    .GetAudioStreams()
+                    .Where(t => t.ToString() == "Audio-only (mp4)")
+                    .OrderBy(t => t.Size)
+                    .ToList();
+
+                foreach (var item in streamInfo)
+                {
+                    audioUrls.Add(new
+                    {
+                        Size = item.Size.ToString(),
+                        AudioUrl = item.Url
+                    });
+                }
+
+                result = new
+                {
+                    AudioInformation = song,
+                    AudioUrls = audioUrls
+                };
+            }
+            catch { return null; }
+            return result;
+        }
+
+        public string GetImageYoutube(Thumbnail[] thumbnails)
+        {
+            var imageUrl = "";
+            if (thumbnails.Count() == 0)
+                return imageUrl;
+            if (thumbnails.Count() == 1)
+                imageUrl = thumbnails[0].Url;
+            thumbnails = thumbnails.OrderByDescending(t => t.Resolution.Width * t.Resolution.Height).ToArray();
+            return thumbnails[thumbnails.Count() / 2].Url;
         }
 
         private async Task AddTopArtists(List<object> homeRes, int top = 5)

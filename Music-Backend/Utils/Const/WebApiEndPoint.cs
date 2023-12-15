@@ -8,6 +8,8 @@
         {
             private const string BaseEndpoint = "~/" + AreaName + "/home";
             public const string GetHome = BaseEndpoint ;
+
+            public const string GetAudioUrlFromYoutube = BaseEndpoint + "/audio/youtube" ;
         }
 
         public static class Search

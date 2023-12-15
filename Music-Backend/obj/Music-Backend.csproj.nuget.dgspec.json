@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\thang\\OneDrive\\Máy tính\\DACN\\DA_Music_Backend\\Music-Backend\\Music-Backend.csproj": {}
+    "D:\\0_Documents\\BT\\HK7\\DATN\\_Project\\DA_Music_Backend\\Music-Backend\\Music-Backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\thang\\OneDrive\\Máy tính\\DACN\\DA_Music_Backend\\Music-Backend\\Music-Backend.csproj": {
+    "D:\\0_Documents\\BT\\HK7\\DATN\\_Project\\DA_Music_Backend\\Music-Backend\\Music-Backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\thang\\OneDrive\\Máy tính\\DACN\\DA_Music_Backend\\Music-Backend\\Music-Backend.csproj",
+        "projectUniqueName": "D:\\0_Documents\\BT\\HK7\\DATN\\_Project\\DA_Music_Backend\\Music-Backend\\Music-Backend.csproj",
         "projectName": "Music-Backend",
-        "projectPath": "C:\\Users\\thang\\OneDrive\\Máy tính\\DACN\\DA_Music_Backend\\Music-Backend\\Music-Backend.csproj",
-        "packagesPath": "C:\\Users\\thang\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\thang\\OneDrive\\Máy tính\\DACN\\DA_Music_Backend\\Music-Backend\\obj\\",
+        "projectPath": "D:\\0_Documents\\BT\\HK7\\DATN\\_Project\\DA_Music_Backend\\Music-Backend\\Music-Backend.csproj",
+        "packagesPath": "C:\\Users\\tle51\\.nuget\\packages\\",
+        "outputPath": "D:\\0_Documents\\BT\\HK7\\DATN\\_Project\\DA_Music_Backend\\Music-Backend\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\thang\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\tle51\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +26,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -88,6 +92,10 @@
             "Swashbuckle.AspNetCore.Filters": {
               "target": "Package",
               "version": "[7.0.12, )"
+            },
+            "YoutubeExplode": {
+              "target": "Package",
+              "version": "[6.3.9, )"
             }
           },
           "imports": [
@@ -109,7 +117,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.402\\RuntimeIdentifierGraph.json"
         }
       }
     }

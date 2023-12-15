@@ -19,6 +19,7 @@ namespace Music_Backend.Models.Entities
 
         [DefaultValue(0)]
         public double Downloads { get; set; }
+        public string? Lyric { get; set; }
         public ICollection<PlaylistSongEntity> PlaylistSongs { get; set; }
         public ICollection<FavoriteEntity> Favorites { get; set; }
         public ICollection<AlbumSongEntity> AlbumSongs { get; set; }
