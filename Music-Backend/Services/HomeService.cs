@@ -54,7 +54,6 @@ namespace Music_Backend.Services
             try
             {
                 var video = await youtube.Videos.GetAsync(youtubeUrl);
-
                 song.Name = video.Title;
                 song.ArtistNames = video.Author.ChannelTitle;
                 song.Image = GetImageYoutube(video.Thumbnails as Thumbnail[]);
@@ -66,7 +65,7 @@ namespace Music_Backend.Services
                 var streamInfo = streamManifest
                     .GetAudioStreams()
                     .Where(t => t.ToString() == "Audio-only (mp4)")
-                    .OrderBy(t => t.Size)
+                    .OrderByDescending(t => t.Size)
                     .ToList();
 
                 foreach (var item in streamInfo)
@@ -78,11 +77,11 @@ namespace Music_Backend.Services
                     });
                 }
 
-                result = new
-                {
-                    AudioInformation = song,
-                    AudioUrls = audioUrls
-                };
+                var audioUrl = audioUrls[0];
+                song.SongUrl = (string) audioUrl.GetType().GetProperty("AudioUrl").GetValue(audioUrl);
+                song.Id = video.Id;
+
+                result = song;
             }
             catch { return null; }
             return result;
