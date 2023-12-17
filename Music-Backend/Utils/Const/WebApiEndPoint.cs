@@ -32,6 +32,8 @@
 
             public const string GetTopSongListens = BaseEndpoint + "/top-listens";
             public const string GetTopSongDownloads = BaseEndpoint + "/top-downloads";
+            public const string GetTopSongFavorites = BaseEndpoint + "/top-favorites";
+
             public const string AddListensSong = BaseEndpoint + "/listens/{songId}";
             public const string AddDownloadsSong = BaseEndpoint + "/downloads/{songId}";
         }

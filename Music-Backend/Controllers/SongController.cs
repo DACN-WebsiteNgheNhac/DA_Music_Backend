@@ -141,6 +141,15 @@ namespace Music_Backend.Controllers
             return this.OkResponse<object>(_mapper.Map<List<SongResponse>>(data), pagination: pagination);
         }
 
+        [HttpGet]
+        [Route(WebApiEndPoint.Song.GetTopSongFavorites)]
+        public async Task<IActionResult> GetTopSongFavorites(int pageNumber = -1, int pageSize = -1)
+        {
+            var data = await _songService.GetTopFavoritesSong(pageNumber, pageSize);
+            var pagination = await _songService.GetPagination("", pageNumber, pageSize);
+            return this.OkResponse<object>(_mapper.Map<List<SongResponse>>(data), pagination: pagination);
+        }
+
         [HttpPut]
         [Route(WebApiEndPoint.Song.AddListensSong)]
         public async Task<IActionResult> AddListensSong(string songId)

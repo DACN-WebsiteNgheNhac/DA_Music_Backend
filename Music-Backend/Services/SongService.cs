@@ -75,6 +75,11 @@ namespace Music_Backend.Services
             return await _SongRepository.GetTopDownloadsSong(pageNumber, pageSize);
         }
 
+        public async Task<List<SongEntity>> GetTopFavoritesSong(int pageNumber = -1, int pageSize = -1)
+        {
+            return await _SongRepository.GetTopFavoritesSong(pageNumber, pageSize);
+        }
+
         public async Task<List<SongEntity>> GetTopListensSong(int pageNumber = -1, int pageSize = -1)
         {
             return await _SongRepository.GetTopListensSong(pageNumber, pageSize);

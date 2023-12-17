@@ -65,6 +65,7 @@ namespace Music_Backend.Utils
         private void MapSong()
         {
             CreateMap<SongEntity, SongResponse>()
+                .ForMember(dest => dest.Favorites, opt => opt.MapFrom(src => src.Favorites.Count))
                 .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments.Select(cmt => cmt).ToList()))
                 .ForMember(dest => dest.ArtistNames, opt => opt.MapFrom(src => string.Join(" - ", src.ArtistSongs.Select(cmt => cmt.Artist.ArtistName))))
                 //.ForMember(dest => dest.Artists, opt => opt.MapFrom(src => src.ArtistSongs.Select(cmt => cmt.Artist.ArtistName))))

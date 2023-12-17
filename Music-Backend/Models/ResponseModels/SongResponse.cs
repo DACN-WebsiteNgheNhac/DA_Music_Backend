@@ -12,6 +12,7 @@ namespace Music_Backend.Models.ResponseModels
         public double? SongTime { get; set; }
         public double? Listens { get; set; }
         public double? Downloads { get; set; }
+        public double? Favorites { get; set; }
         public string? Lyric { get; set; }
 
 

@@ -146,6 +146,21 @@ namespace Music_Backend.Repositories
                     .ToListAsync();
         }
 
+        public async Task<List<SongEntity>> GetTopFavoritesSong(int pageNumber = -1, int pageSize = -1)
+        {
+            if (pageNumber > -1 && pageSize > -1)
+                return await GetAllAsync().Result.Where(t => t.DeletedAt == null)
+                    .Skip((pageNumber - 1) * pageSize).Take(pageSize)
+                    .OrderByDescending(t => t.Favorites.Count)
+                    .Include(t => t.Favorites)
+                    .ToListAsync();
+            else
+                return await GetAllAsync().Result.Where(t => t.DeletedAt == null)
+                    .OrderByDescending(t => t.Favorites.Count)
+                    .Include(t => t.Favorites)
+                    .ToListAsync();
+        }
+
         public async Task<List<SongEntity>> GetTopListensSong(int pageNumber = -1, int pageSize = -1)
         {
             if (pageNumber > -1 && pageSize > -1)

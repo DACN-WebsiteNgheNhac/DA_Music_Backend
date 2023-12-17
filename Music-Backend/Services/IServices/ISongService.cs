@@ -15,6 +15,7 @@ namespace Music_Backend.Services.IServices
 
         Task<List<SongEntity>> GetTopListensSong(int pageNumber = -1, int pageSize = -1);
         Task<List<SongEntity>> GetTopDownloadsSong(int pageNumber = -1, int pageSize = -1);   
+        Task<List<SongEntity>> GetTopFavoritesSong(int pageNumber = -1, int pageSize = -1);   
         Task<SongEntity> AddListensSong(string songId);
         Task<SongEntity> AddDownloadsSong(string songId);
 
